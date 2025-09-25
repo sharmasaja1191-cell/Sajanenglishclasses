@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sajan English Classes - Demo</title>
+<style>
+/* Reset & Body */
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Noto Sans',sans-serif}
+body{background:linear-gradient(135deg,#f06 0%,#c64 45%,#9b4 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px}
+
+/* Phone container */
+.phone{width:360px;max-width:95vw;background:linear-gradient(180deg,#fff,#fafafa);border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,0.25);overflow:hidden}
+header{background:linear-gradient(90deg,#ff6bb5,#7b5cff);color:#fff;padding:22px 18px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
+header .title{display:flex;align-items:center;gap:12px}
+header h1{font-size:18px;letter-spacing:0.2px}
+header p{font-size:12px;opacity:0.9;margin-top:6px}
+
+/* Contact */
+.contact{padding:16px;background:#0dbb67;color:#fff;margin:14px;border-radius:12px;box-shadow:0 6px 18px rgba(13,187,103,0.18)}
+.contact .line{display:flex;justify-content:space-between;align-items:center}
+.contact small{opacity:0.95}
+.contact > div{display:flex;gap:10px;margin-top:10px}
+
+/* Course cards */
+.card-wrap{padding:18px}
+.course-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 10px 20px rgba(12,20,40,0.06);border:1px solid rgba(15,20,30,0.02)}
+.course-card .head{display:flex;justify-content:space-between;align-items:center}
+.course-card h2{font-size:16px}
+.chip{font-size:12px;padding:6px 10px;border-radius:20px;background:linear-gradient(90deg,#7b5cff,#4ca0ff);color:#fff}
+.summary{margin-top:10px;font-size:13px;color:#666}
+.cat{margin-top:12px}
+.category-title{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:#f7f8fb;border:1px dashed rgba(0,0,0,0.03);cursor:pointer}
+.chapters{padding:8px 10px;display:none}
+.chapter-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;margin-top:8px;background:linear-gradient(180deg,#fff,#f9fbff);border:1px solid rgba(15,20,30,0.02);flex-direction:column;align-items:flex-start}
+.chapter-title{font-size:14px;margin-bottom:6px}
+.chapter-actions{display:flex;gap:8px}
+.btn{padding:8px 10px;border-radius:8px;border:none;cursor:pointer;font-size:12px}
+.btn.explain{background:#e6f6ff}
+.btn.qa{background:#fff1e6}
+.btn.quiz{background:#f3e9ff}
+.price-row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+.price{color:#ff2f6d;font-weight:700}
+.enroll{padding:8px 12px;border-radius:18px;background:linear-gradient(90deg,#6b7bff,#a758ff);color:#fff;border:none;cursor:pointer}
+.payment{margin-top:12px}
+.payment h4{font-size:14px;margin-bottom:6px}
+.payment-methods{display:flex;flex-wrap:wrap;gap:8px}
+.payment-method{flex:1;background:linear-gradient(90deg,#6b7bff,#a758ff);color:#fff;text-align:center;padding:8px 0;border-radius:10px;cursor:pointer;font-size:12px}
+footer{padding:14px;text-align:center;color:#fff;font-size:13px;opacity:0.95}
+.hidden{display:none}
+@media (max-width:420px){.phone{width:94vw}}
+</style>
+</head>
+<body>
+<div class="phone" role="application">
+<header>
+<div class="title">
+<div style="width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center">📚</div>
+<div>
+<h1>Sajan English Classes</h1>
+<p>Complete Chapter-wise Learning Platform / सम्पूर्ण पाठ्यक्रम</p>
+</div>
+</div>
+</header>
+
+<div class="contact">
+<div class="line"><small>📞 संपर्क: Sajan Sir</small><small>Professional English & Hindi Teacher</small></div>
+<div>
+<div style="flex:1;background:rgba(255,255,255,0.08);padding:10px;border-radius:8px;text-align:center">📱<br><small>Mobile<br>6299891191</small></div>
+<div style="flex:1;background:rgba(255,255,255,0.08);padding:10px;border-radius:8px;text-align:center">💬<br><small>WhatsApp<br>6299891191</small></div>
+</div>
+</div>
+
+<div class="card-wrap" id="coursesContainer"></div>
+
+<footer>Design demo — Sajan English Classes • Built for coaching</footer>
+</div>
+
+<script>
+// Course data
+const courses=[
+{id:'11en',name:'Class 11th English',price:'₹99',summary:'Complete chapter-wise course with all sections',categories:[
+{title:'Prose',chapters:['Animals in Prison','Nalanda: Ancient Seat of Learning','A Snake in the Grass','The Rule of the Road','The Scientific Point of View','I Pass the Delhi Test','The Leader of Men','Mother India','National Unity, Nation and Nationalism','Dolly at the Dentist','The Three Vows','Exceptional Role of Newspapers in Development']},
+{title:'Poetry',chapters:['Where the Mind is without Fear','The Marriage of True Minds','The Chimney Sweeper','Stopping by Woods on a Snowy Evening','The Lamentation of the Old Pensioner','Three Years She Grew','Village Song','Follower','Voice of the Unwanted Girl','South Delhi Murder']},
+{title:'Story of English',chapters:['How English Began','English Down the Ages','Global English','Future of English','Story of English Poetry']},
+{title:'Grammar',chapters:['Parts of speech','Noun','Pronoun','Adjective','Verb','Adverb','Preposition','Conjunction','Interjection','Determiners','Question tags']},
+{title:'Writing',chapters:['Essay','Letter / Application','Translation','Comprehension (passage)','Precis writing']}]
+},
+{id:'12en',name:'Class 12th English',price:'₹199',summary:'Board exam focused complete preparation',categories:[
+{title:'Chapters and author',chapters:['Indian Civilisation and Culture','Bharat is My Home','A Pinch of Snuff','I Have a Dream','Ideas that have Helped Mankind','The Artist','A Child Born','How Free is the Press','The Earth','India Through a Traveller’s Eyes','A Marriage Proposal']},
+{title:'Poetry',chapters:['Sweetest Love I do not Goe','Song of Myself','Now the Leaves are Falling Fast','Ode to Autumn','An Epitaph','The Soldier','Macavity: The Mystery Cat','Fire-Hymn','Snake','My Grandmother’s House']},
+{title:'Story of English',chapters:['Old English','Middle English','Modern English','English as a World Language','Story of English Drama','Story of the Novel in English']},
+{title:'Grammar',chapters:['Voice','Time and Tense','Modal verb','Combination','Transformation','Preposition','Correction of sentences','Article','Spelling test','Subject - verb agreement','Narration','Phrases','Antonyms','Synonyms','Miscellaneous']},
+{title:'Writing',chapters:['Essay','Letter / Application','Translation','Comprehension (passage)','Precis writing']}]
+},
+{id:'11hi',name:'Class 11th Hindi',price:'₹99',summary:'संपूर्ण हिंदी पाठ्यक्रम परीक्षा तैयारी',categories:[
+{title:'गद्य - खंड',chapters:['पूस की रात','कविता की परख','आँखों देखा गदर','बेजोड़ गायिका : लता मंगेशकर','चलचित्र','मेरी वियतनाम यात्रा','सिक्का बदल गया','उत्तरी स्वप्न परी : हरी क्रांति','एक दीक्षांत भाषण','सूर्य','भोगे हुए दिन','गाँव के बच्चों की शिक्षा']},
+{title:'पद्य - खंड',chapters:['विद्यापति के पद','कबीर के पद','मीराबाई के पद','सहजोबाई के पद','भारत-दुर्दशा','झंकार','तोड़ती पत्थर','बहुत दिनों के बाद','गालिब','जगरनाथ','पृथ्वी','मातृभूमि']},
+{title:'व्याकरण',chapters:['संज्ञा','सर्वनाम','विशेषण','क्रिया','क्रिया विशेषण','समुच्चयबोधक (संयोजक)','विस्मयादिबोधक','अव्यय (निपात)']},
+{title:'लेखन',chapters:['निबंध','आवेदन एवं पत्र लेखन','संक्षेपण']}]
+},
+{id:'12hi',name:'Class 12th Hindi',price:'₹199',summary:'उन्नत स्तर का परीक्षा तथा साहित्यिक तैयारी',categories:[
+{title:'गद्य खण्ड',chapters:['बातचीत','उसने कहा था','संपूर्ण क्रांति','अर्द्धनारीश्वर','रोज','एक लेख और एक पत्र','ओ सदानीरा','सिपाही की माँ','प्रगीत और समाज','जूठन','हँसते हुए मेरा अकेलापन','तिरिछ','शिक्षा']},
+{title:'काव्य खण्ड',chapters:['कड़बक','सूरदास के पद','तुलसीदास के पद','छप्पय','कवित्त','तुमुल कोलाहल कलह में','पुत्र वियोग','उषा','जन-जन का चेहरा एक','अधिनायक','प्यारे नन्हें बेटे को','हार-जीत','गाँव का घर']},
+{title:'व्याकरण',chapters:['उच्चारण स्थान','संज्ञा','सर्वनाम','विशेषण','मुहावरे','विलोम शब्द','पर्यायवाची शब्द','अनेक शब्दों के लिए एक शब्द','समास','लिंग निर्णय','संधि विच्छेद','उपसर्ग','प्रत्यय','शब्द शुद्धिकरण','वाक्य शुद्धिकरण','कारक','वचन','काल','शब्द','पदबंध']},
+{title:'लेखन',chapters:['निबंध','आवेदन एवं पत्र लेखन','संक्षेपण']}]
+},
+{id:'complete',name:'Complete Package',price:'₹499',summary:'All 4 courses together with total chapters section-wise',categories:[]}
+];
+
+// Render courses
+const container=document.getElementById('coursesContainer');
+courses.forEach(course=>{
+const card=document.createElement('div'); card.className='course-card';
+card.innerHTML=`<div class="head"><div><h2>${course.name}</h2><div class="summary">${course.summary}</div></div><div class="chip">${course.price}</div></div><div class="cat-list"></div>`;
+const catList=card.querySelector('.cat-list');
+
+if(course.id==='complete'){
+  ['11en','12en','11hi','12hi'].forEach(cId=>{
+    let c=courses.find(x=>x.id===cId);
+    const catContainer=document.createElement('div'); catContainer.className='cat';
+    const safeId=`complete_${cId}`;
+    catContainer.innerHTML=`<div class="category-title" data-target="${safeId}"><strong>${c.name}</strong></div><div class="chapters" id="${safeId}"></div>`;
+    const chaptersDiv=catContainer.querySelector('.chapters');
+
+    c.categories.forEach((cat,ci)=>{
+      const secDiv=document.createElement('div'); secDiv.className='cat';
+      const secId=`${safeId}_sec_${ci}`;
+      secDiv.innerHTML=`<div class="category-title" data-target="${secId}"><strong>${cat.title}</strong> <small> ${cat.chapters.length} lessons ▾</small></div>
+      <div class="chapters" id="${secId}"></div>`;
+      const secChDiv=secDiv.querySelector('.chapters');
+
+      cat.chapters.forEach(ch=>{
+        const chDiv=document.createElement('div'); chDiv.className='chapter-item';
+        chDiv.innerHTML=`<div class="chapter-title">${ch}</div>
+        <div class="chapter-actions">
+          <button class="btn explain" data-action="explain">Explanation</button>
+          <button class="btn qa" data-action="qa">Q&A</button>
+          ${cat.title.toLowerCase().includes('writing')||cat.title.includes('लेखन')?'':`<button class="btn quiz" data-action="quiz">Quiz</button>`}
+        </div>`;
+        secChDiv.appendChild(chDiv);
+      });
+      chaptersDiv.appendChild(secDiv);
+    });
+
+    catList.appendChild(catContainer);
+  });
+
+  // Payment section
+  const paymentDiv=document.createElement('div'); paymentDiv.className='payment';
+  paymentDiv.innerHTML=`<h4>Payment Options</h4><div class="payment-methods">
+  <div class="payment-method" onclick="payCard('${course.name}')">💳 Card</div>
+  <div class="payment-method" onclick="payNetBanking('${course.name}')">🏦 Net Banking</div>
+  <div class="payment-method" onclick="payUPI('${course.name}')">📱 UPI</div>
+  <div class="payment-method" onclick="payWallet('${course.name}')">💰 Wallet</div>
+  <div class="payment-method" onclick="payQRCode('${course.name}')">📲 QR Code</div>
+  </div>`;
+  card.appendChild(paymentDiv);
+
+  const priceRow=document.createElement('div'); priceRow.className='price-row';
+  priceRow.innerHTML=`<div class="price">${course.price} <small style="text-decoration:line-through;color:#aaa;font-weight:500;margin-left:8px">₹899</small></div>
+  <button class="enroll" onclick="alert('Enrollment demo for ${course.name}')">Enroll Now</button>`;
+  card.appendChild(priceRow);
+}else{
+  // Existing logic for other courses
+  course.categories.forEach((cat,ci)=>{
+    const c=document.createElement('div'); c.className='cat';
+    const safeId=`${course.id}_cat_${ci}`;
+    c.innerHTML=`<div class="category-title" data-target="${safeId}"><strong>${cat.title}</strong><small> ${cat.chapters.length} lessons ▾</small></div><div class="chapters" id="${safeId}"></div>`;
+    const chaptersDiv=c.querySelector('.chapters');
+    cat.chapters.forEach(ch=>{
+      const chDiv=document.createElement('div'); chDiv.className='chapter-item';
+      chDiv.innerHTML=`<div class="chapter-title">${ch}</div><div class="chapter-actions">
+      <button class="btn explain" data-action="explain">Explanation</button>
+      <button class="btn qa" data-action="qa">Q&A</button>${cat.title.toLowerCase().includes('writing')||cat.title.includes('लेखन')?'':`<button class="btn quiz" data-action="quiz">Quiz</button>`}</div>`;
+      chaptersDiv.appendChild(chDiv);
+    });
+    catList.appendChild(c);
+  });
+
+  // Payment + Price row
+  const paymentDiv=document.createElement('div'); paymentDiv.className='payment';
+  paymentDiv.innerHTML=`<h4>Payment Options</h4><div class="payment-methods">
+  <div class="payment-method" onclick="payCard('${course.name}')">💳 Card</div>
+  <div class="payment-method" onclick="payNetBanking('${course.name}')">🏦 Net Banking</div>
+  <div class="payment-method" onclick="payUPI('${course.name}')">📱 UPI</div>
+  <div class="payment-method" onclick="payWallet('${course.name}')">💰 Wallet</div>
+  <div class="payment-method" onclick="payQRCode('${course.name}')">📲 QR Code</div>
+  </div>`;
+  card.appendChild(paymentDiv);
+
+  const priceRow=document.createElement('div'); priceRow.className='price-row';
+  priceRow.innerHTML=`<div class="price">${course.price} <small style="text-decoration:line-through;color:#aaa;font-weight:500;margin-left:8px">${course.id==='11en'||course.id==='11hi'?'₹199':'₹299'}</small></div>
+  <button class="enroll" onclick="alert('Enrollment demo for ${course.name}')">Enroll Now</button>`;
+  card.appendChild(priceRow);
+}
+
+container.appendChild(card);
+});
+
+// Accordion toggle
+document.addEventListener('click', e=>{
+const catTitle=e.target.closest('.category-title');
+if(catTitle){
+const tgt=document.getElementById(catTitle.dataset.target);
+const isOpen=tgt.style.display==='block';
+document.querySelectorAll('.chapters').forEach(d=>d.style.display='none');
+if(!isOpen) tgt.style.display='block';
+}
+});
+
+// Chapter buttons
+document.addEventListener('click', e=>{
+const btn=e.target.closest('button'); if(!btn||!btn.dataset.action) return;
+const chapter=btn.closest('.chapter-item').querySelector('.chapter-title').innerText;
+alert(`${btn.dataset.action.toUpperCase()} clicked for "${chapter}"`);
+});
+
+// Payment simulation
+function payCard(course){alert('Pay via Card for '+course)}
+function payNetBanking(course){alert('Pay via Net Banking for '+course)}
+function payUPI(course){alert('Pay via UPI for '+course)}
+function payWallet(course){alert('Pay via Wallet for '+course)}
+function payQRCode(course){alert('QR Code payment demo for '+course)}
+</script>
+</body>
+</html>
