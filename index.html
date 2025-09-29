@@ -3,24 +3,43 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sajan English Classes - Demo</title>
+<title>Sajan English Classes - Learning Platform</title>
 <style>
 /* Reset & Body */
 *{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Noto Sans',sans-serif}
-body{background:linear-gradient(135deg,#f06 0%,#c64 45%,#9b4 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px}
+body{background:linear-gradient(135deg,#f06 0%,#c64 45%,#9b4 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
 
 /* Phone container */
-.phone{width:360px;max-width:95vw;background:linear-gradient(180deg,#fff,#fafafa);border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,0.25);overflow:hidden}
+.phone{width:360px;max-width:95vw;background:linear-gradient(180deg,#fff,#fafafa);border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,0.25);overflow:hidden;position:relative}
+
+/* Header */
 header{background:linear-gradient(90deg,#ff6bb5,#7b5cff);color:#fff;padding:22px 18px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
 header .title{display:flex;align-items:center;gap:12px}
 header h1{font-size:18px;letter-spacing:0.2px}
 header p{font-size:12px;opacity:0.9;margin-top:6px}
+.auth-toggle{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.2);border:none;color:white;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:11px}
+
+/* Login/Signup Modal */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center}
+.modal-content{background:white;border-radius:12px;padding:24px;width:320px;max-width:90vw}
+.modal h3{margin-bottom:16px;color:#333}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;margin-bottom:4px;font-size:14px;color:#555}
+.form-group input,.form-group select{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px}
+.btn-primary{width:100%;padding:12px;background:linear-gradient(90deg,#7b5cff,#4ca0ff);color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px}
+.btn-secondary{background:#f8f9fa;color:#666;margin-top:8px}
+.close-modal{position:absolute;top:10px;right:15px;background:none;border:none;font-size:20px;cursor:pointer}
 
 /* Contact */
 .contact{padding:16px;background:#0dbb67;color:#fff;margin:14px;border-radius:12px;box-shadow:0 6px 18px rgba(13,187,103,0.18)}
 .contact .line{display:flex;justify-content:space-between;align-items:center}
 .contact small{opacity:0.95}
 .contact > div{display:flex;gap:10px;margin-top:10px}
+
+/* Navigation */
+.nav-tabs{display:flex;background:#f8f9fa;margin:14px;border-radius:12px;overflow:hidden}
+.nav-tab{flex:1;padding:12px 8px;text-align:center;background:transparent;border:none;cursor:pointer;font-size:12px;color:#666}
+.nav-tab.active{background:linear-gradient(90deg,#7b5cff,#4ca0ff);color:white}
 
 /* Course cards */
 .card-wrap{padding:18px}
@@ -39,44 +58,255 @@ header p{font-size:12px;opacity:0.9;margin-top:6px}
 .btn.explain{background:#e6f6ff}
 .btn.qa{background:#fff1e6}
 .btn.quiz{background:#f3e9ff}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
 .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
 .price{color:#ff2f6d;font-weight:700}
 .enroll{padding:8px 12px;border-radius:18px;background:linear-gradient(90deg,#6b7bff,#a758ff);color:#fff;border:none;cursor:pointer}
 .payment{margin-top:12px}
 .payment h4{font-size:14px;margin-bottom:6px}
-.payment-methods{display:flex;flex-wrap:wrap;gap:8px}
-.payment-method{flex:1;background:linear-gradient(90deg,#6b7bff,#a758ff);color:#fff;text-align:center;padding:8px 0;border-radius:10px;cursor:pointer;font-size:12px}
-footer{padding:14px;text-align:center;color:#fff;font-size:13px;opacity:0.95}
-.hidden{display:none}
+
+/* Admin Panel */
+.admin-panel{display:none;padding:20px}
+.admin-section{margin-bottom:20px;padding:15px;background:#f8f9fa;border-radius:10px}
+.admin-section h3{margin-bottom:10px;color:#333}
+.file-upload{margin-bottom:10px}
+.file-upload input{margin-bottom:5px}
+.quiz-builder{margin-top:10px}
+.question-item{background:white;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #ddd}
+.option-input{margin-bottom:5px}
+
+/* Content Viewer */
+.content-viewer{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:white;z-index:2000;overflow-y:auto}
+.content-header{background:linear-gradient(90deg,#ff6bb5,#7b5cff);color:white;padding:15px;display:flex;justify-content:space-between;align-items:center}
+.content-body{padding:20px}
+.pdf-viewer{width:100%;height:600px;border:1px solid #ddd;border-radius:8px}
+
+/* Quiz Interface */
+.quiz-container{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:white;z-index:2000;overflow-y:auto}
+.quiz-question{margin-bottom:20px;padding:15px;background:#f8f9fa;border-radius:10px}
+.quiz-options{margin-top:10px}
+.quiz-option{display:block;margin-bottom:8px;padding:10px;background:white;border:1px solid #ddd;border-radius:8px;cursor:pointer}
+.quiz-option:hover{background:#e6f6ff}
+.quiz-option.selected{background:#7b5cff;color:white}
+.quiz-score{text-align:center;padding:20px;font-size:18px;font-weight:bold}
+
+/* Payment QR */
+.qr-payment{text-align:center;padding:20px}
+.qr-code{width:200px;height:200px;background:#f0f0f0;margin:20px auto;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#666}
+.payment-info{margin-top:15px;font-size:13px;color:#666}
+
+/* Responsive */
 @media (max-width:420px){.phone{width:94vw}}
+
+/* Hide sections by default */
+.tab-content{display:none}
+.tab-content.active{display:block}
 </style>
 </head>
 <body>
+
 <div class="phone" role="application">
-<header>
-<div class="title">
-<div style="width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center">📚</div>
-<div>
-<h1>Sajan English Classes</h1>
-<p>Complete Chapter-wise Learning Platform / सम्पूर्ण पाठ्यक्रम</p>
-</div>
-</div>
-</header>
+  <!-- Auth Modal -->
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closeModal()">&times;</button>
+      <div id="loginForm">
+        <h3>Student Login</h3>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="loginPhone" placeholder="Enter phone number">
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter password">
+        </div>
+        <button class="btn-primary" onclick="login()">Login</button>
+        <button class="btn-primary btn-secondary" onclick="showSignup()">New Student? Register</button>
+        <button class="btn-primary btn-secondary" onclick="showAdminLogin()">Admin Login</button>
+      </div>
+      
+      <div id="signupForm" style="display:none">
+        <h3>Student Registration</h3>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="signupName" placeholder="Enter full name">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" id="signupPhone" placeholder="Enter phone number">
+        </div>
+        <div class="form-group">
+          <label>Class</label>
+          <select id="signupClass">
+            <option value="">Select Class</option>
+            <option value="11">Class 11th</option>
+            <option value="12">Class 12th</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="signupPassword" placeholder="Create password">
+        </div>
+        <button class="btn-primary" onclick="signup()">Register</button>
+        <button class="btn-primary btn-secondary" onclick="showLogin()">Already registered? Login</button>
+      </div>
 
-<div class="contact">
-<div class="line"><small>📞 संपर्क: Sajan Sir</small><small>Professional English & Hindi Teacher</small></div>
-<div>
-<div style="flex:1;background:rgba(255,255,255,0.08);padding:10px;border-radius:8px;text-align:center">📱<br><small>Mobile<br>6299891191</small></div>
-<div style="flex:1;background:rgba(255,255,255,0.08);padding:10px;border-radius:8px;text-align:center">💬<br><small>WhatsApp<br>6299891191</small></div>
-</div>
-</div>
+      <div id="adminLoginForm" style="display:none">
+        <h3>Admin Login</h3>
+        <div class="form-group">
+          <label>Admin Password</label>
+          <input type="password" id="adminPassword" placeholder="Enter admin password">
+        </div>
+        <button class="btn-primary" onclick="adminLogin()">Admin Login</button>
+        <button class="btn-primary btn-secondary" onclick="showLogin()">Back to Student Login</button>
+      </div>
+    </div>
+  </div>
 
-<div class="card-wrap" id="coursesContainer"></div>
+  <header>
+    <div class="title">
+      <div style="width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center">📚</div>
+      <div>
+        <h1>Sajan English Classes</h1>
+        <p>Complete Chapter-wise Learning Platform / सम्पूर्ण पाठ्यक्रम</p>
+      </div>
+    </div>
+    <button class="auth-toggle" onclick="showAuthModal()" id="authButton">🔑 Login</button>
+  </header>
 
-<footer>Design demo — Sajan English Classes • Built for coaching</footer>
+  <div class="contact">
+    <div class="line"><small>📞 संपर्क: Sajan Sir</small><small>Professional English & Hindi Teacher</small></div>
+    <div>
+      <div style="flex:1;background:rgba(255,255,255,0.08);padding:10px;border-radius:8px;text-align:center">📱<br><small>Mobile<br>6299891191</small></div>
+      <div style="flex:1;background:rgba(255,255,255,0.08);padding:10px;border-radius:8px;text-align:center">💬<br><small>WhatsApp<br>6299891191</small></div>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showTab('courses')">Courses</button>
+    <button class="nav-tab" id="adminTab" onclick="showTab('admin')" style="display:none">Admin</button>
+  </div>
+
+  <!-- Courses Tab -->
+  <div id="courses" class="tab-content active">
+    <div class="card-wrap" id="coursesContainer"></div>
+  </div>
+
+  <!-- Admin Tab -->
+  <div id="admin" class="tab-content admin-panel">
+    <div class="admin-section">
+      <h3>Upload Content</h3>
+      <select id="adminCourse" onchange="loadChapters()">
+        <option value="">Select Course</option>
+        <option value="11en">Class 11th English</option>
+        <option value="12en">Class 12th English</option>
+        <option value="11hi">Class 11th Hindi</option>
+        <option value="12hi">Class 12th Hindi</option>
+      </select>
+      <select id="adminChapter" style="margin-top:10px">
+        <option value="">Select Chapter</option>
+      </select>
+      
+      <div class="file-upload" style="margin-top:15px">
+        <h4>Upload Explanation PDF</h4>
+        <input type="file" id="explanationPdf" accept=".pdf">
+        <button class="btn-primary" onclick="uploadContent('explanation')">Upload Explanation</button>
+      </div>
+      
+      <div class="file-upload">
+        <h4>Upload Q&A PDF</h4>
+        <input type="file" id="qaPdf" accept=".pdf">
+        <button class="btn-primary" onclick="uploadContent('qa')">Upload Q&A</button>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h3>Quiz Builder</h3>
+      <div class="quiz-builder">
+        <input type="text" id="quizQuestion" placeholder="Enter question" style="width:100%;margin-bottom:10px;padding:8px;border:1px solid #ddd;border-radius:4px">
+        <div class="quiz-options">
+          <input type="text" class="option-input" placeholder="Option A" style="width:100%;margin-bottom:5px;padding:6px;border:1px solid #ddd;border-radius:4px">
+          <input type="text" class="option-input" placeholder="Option B" style="width:100%;margin-bottom:5px;padding:6px;border:1px solid #ddd;border-radius:4px">
+          <input type="text" class="option-input" placeholder="Option C" style="width:100%;margin-bottom:5px;padding:6px;border:1px solid #ddd;border-radius:4px">
+          <input type="text" class="option-input" placeholder="Option D" style="width:100%;margin-bottom:5px;padding:6px;border:1px solid #ddd;border-radius:4px">
+        </div>
+        <select id="correctAnswer" style="width:100%;margin-bottom:10px;padding:6px">
+          <option value="">Select Correct Answer</option>
+          <option value="0">Option A</option>
+          <option value="1">Option B</option>
+          <option value="2">Option C</option>
+          <option value="3">Option D</option>
+        </select>
+        <button class="btn-primary" onclick="addQuizQuestion()">Add Question</button>
+      </div>
+      
+      <div id="quizPreview" style="margin-top:15px"></div>
+      <button class="btn-primary" onclick="saveQuiz()" style="margin-top:10px">Save Quiz</button>
+    </div>
+
+    <div class="admin-section">
+      <h3>Student Management</h3>
+      <div id="studentList"></div>
+    </div>
+  </div>
+
+  <!-- Content Viewer -->
+  <div id="contentViewer" class="content-viewer">
+    <div class="content-header">
+      <h3 id="contentTitle">Content</h3>
+      <button onclick="closeContentViewer()" style="background:none;border:none;color:white;font-size:18px;cursor:pointer">&times;</button>
+    </div>
+    <div class="content-body">
+      <iframe id="pdfViewer" class="pdf-viewer" src="" style="pointer-events:none"></iframe>
+    </div>
+  </div>
+
+  <!-- Quiz Container -->
+  <div id="quizContainer" class="quiz-container">
+    <div class="content-header">
+      <h3 id="quizTitle">Quiz</h3>
+      <button onclick="closeQuiz()" style="background:none;border:none;color:white;font-size:18px;cursor:pointer">&times;</button>
+    </div>
+    <div class="content-body">
+      <div id="quizContent"></div>
+      <button id="submitQuiz" class="btn-primary" onclick="submitQuiz()" style="display:none;margin-top:20px">Submit Quiz</button>
+      <div id="quizResult" class="quiz-score"></div>
+    </div>
+  </div>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="modal">
+    <div class="modal-content">
+      <button class="close-modal" onclick="closePaymentModal()">&times;</button>
+      <div class="qr-payment">
+        <h3 id="paymentTitle">Payment</h3>
+        <div class="qr-code" id="qrCode">
+          <div style="text-align:center">
+            <div style="font-size:60px">📱</div>
+            <div>Scan to Pay</div>
+            <div style="font-weight:bold;margin-top:10px" id="paymentAmount">₹99</div>
+          </div>
+        </div>
+        <div class="payment-info">
+          <p><strong>Pay to:</strong> Sajan Sir</p>
+          <p><strong>UPI ID:</strong> sajanclasses@paytm</p>
+          <p>After payment, send screenshot on WhatsApp: <strong>6299891191</strong></p>
+          <button class="btn-primary" onclick="confirmPayment()" style="margin-top:15px">I have paid</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
+// Global state
+let currentUser = null;
+let isAdmin = false;
+let currentQuizData = [];
+let currentQuizAnswers = {};
+
 // Course data
 const courses=[
 {id:'11en',name:'Class 11th English',price:'₹99',summary:'Complete chapter-wise course with all sections',categories:[
@@ -87,8 +317,8 @@ const courses=[
 {title:'Writing',chapters:['Essay','Letter / Application','Translation','Comprehension (passage)','Precis writing']}]
 },
 {id:'12en',name:'Class 12th English',price:'₹199',summary:'Board exam focused complete preparation',categories:[
-{title:'Chapters and author',chapters:['Indian Civilisation and Culture','Bharat is My Home','A Pinch of Snuff','I Have a Dream','Ideas that have Helped Mankind','The Artist','A Child Born','How Free is the Press','The Earth','India Through a Traveller’s Eyes','A Marriage Proposal']},
-{title:'Poetry',chapters:['Sweetest Love I do not Goe','Song of Myself','Now the Leaves are Falling Fast','Ode to Autumn','An Epitaph','The Soldier','Macavity: The Mystery Cat','Fire-Hymn','Snake','My Grandmother’s House']},
+{title:'Prose',chapters:['Indian Civilisation and Culture','Bharat is My Home','A Pinch of Snuff','I Have a Dream','Ideas that have Helped Mankind','The Artist','A Child Born','How Free is the Press','The Earth','India Through a Traveller\'s Eyes','A Marriage Proposal']},
+{title:'Poetry',chapters:['Sweetest Love I do not Goe','Song of Myself','Now the Leaves are Falling Fast','Ode to Autumn','An Epitaph','The Soldier','Macavity: The Mystery Cat','Fire-Hymn','Snake','My Grandmother\'s House']},
 {title:'Story of English',chapters:['Old English','Middle English','Modern English','English as a World Language','Story of English Drama','Story of the Novel in English']},
 {title:'Grammar',chapters:['Voice','Time and Tense','Modal verb','Combination','Transformation','Preposition','Correction of sentences','Article','Spelling test','Subject - verb agreement','Narration','Phrases','Antonyms','Synonyms','Miscellaneous']},
 {title:'Writing',chapters:['Essay','Letter / Application','Translation','Comprehension (passage)','Precis writing']}]
@@ -105,123 +335,605 @@ const courses=[
 {title:'व्याकरण',chapters:['उच्चारण स्थान','संज्ञा','सर्वनाम','विशेषण','मुहावरे','विलोम शब्द','पर्यायवाची शब्द','अनेक शब्दों के लिए एक शब्द','समास','लिंग निर्णय','संधि विच्छेद','उपसर्ग','प्रत्यय','शब्द शुद्धिकरण','वाक्य शुद्धिकरण','कारक','वचन','काल','शब्द','पदबंध']},
 {title:'लेखन',chapters:['निबंध','आवेदन एवं पत्र लेखन','संक्षेपण']}]
 },
-{id:'complete',name:'Complete Package',price:'₹499',summary:'All 4 courses together with total chapters section-wise',categories:[]}
+{id:'complete',name:'Complete Package',price:'₹499',summary:'All 4 courses together with maximum discount',categories:[]}
 ];
 
-// Render courses
-const container=document.getElementById('coursesContainer');
-courses.forEach(course=>{
-const card=document.createElement('div'); card.className='course-card';
-card.innerHTML=`<div class="head"><div><h2>${course.name}</h2><div class="summary">${course.summary}</div></div><div class="chip">${course.price}</div></div><div class="cat-list"></div>`;
-const catList=card.querySelector('.cat-list');
+// Initialize app
+document.addEventListener('DOMContentLoaded', function() {
+  loadUserState();
+  renderCourses();
+  if(isAdmin) {
+    loadStudentList();
+  }
+});
 
-if(course.id==='complete'){
-  ['11en','12en','11hi','12hi'].forEach(cId=>{
-    let c=courses.find(x=>x.id===cId);
-    const catContainer=document.createElement('div'); catContainer.className='cat';
-    const safeId=`complete_${cId}`;
-    catContainer.innerHTML=`<div class="category-title" data-target="${safeId}"><strong>${c.name}</strong></div><div class="chapters" id="${safeId}"></div>`;
-    const chaptersDiv=catContainer.querySelector('.chapters');
-
-    c.categories.forEach((cat,ci)=>{
-      const secDiv=document.createElement('div'); secDiv.className='cat';
-      const secId=`${safeId}_sec_${ci}`;
-      secDiv.innerHTML=`<div class="category-title" data-target="${secId}"><strong>${cat.title}</strong> <small> ${cat.chapters.length} lessons ▾</small></div>
-      <div class="chapters" id="${secId}"></div>`;
-      const secChDiv=secDiv.querySelector('.chapters');
-
-      cat.chapters.forEach(ch=>{
-        const chDiv=document.createElement('div'); chDiv.className='chapter-item';
-        chDiv.innerHTML=`<div class="chapter-title">${ch}</div>
-        <div class="chapter-actions">
-          <button class="btn explain" data-action="explain">Explanation</button>
-          <button class="btn qa" data-action="qa">Q&A</button>
-          ${cat.title.toLowerCase().includes('writing')||cat.title.includes('लेखन')?'':`<button class="btn quiz" data-action="quiz">Quiz</button>`}
-        </div>`;
-        secChDiv.appendChild(chDiv);
-      });
-      chaptersDiv.appendChild(secDiv);
-    });
-
-    catList.appendChild(catContainer);
-  });
-
-  // Payment section
-  const paymentDiv=document.createElement('div'); paymentDiv.className='payment';
-  paymentDiv.innerHTML=`<h4>Payment Options</h4><div class="payment-methods">
-  <div class="payment-method" onclick="payCard('${course.name}')">💳 Card</div>
-  <div class="payment-method" onclick="payNetBanking('${course.name}')">🏦 Net Banking</div>
-  <div class="payment-method" onclick="payUPI('${course.name}')">📱 UPI</div>
-  <div class="payment-method" onclick="payWallet('${course.name}')">💰 Wallet</div>
-  <div class="payment-method" onclick="payQRCode('${course.name}')">📲 QR Code</div>
-  </div>`;
-  card.appendChild(paymentDiv);
-
-  const priceRow=document.createElement('div'); priceRow.className='price-row';
-  priceRow.innerHTML=`<div class="price">${course.price} <small style="text-decoration:line-through;color:#aaa;font-weight:500;margin-left:8px">₹899</small></div>
-  <button class="enroll" onclick="alert('Enrollment demo for ${course.name}')">Enroll Now</button>`;
-  card.appendChild(priceRow);
-}else{
-  // Existing logic for other courses
-  course.categories.forEach((cat,ci)=>{
-    const c=document.createElement('div'); c.className='cat';
-    const safeId=`${course.id}_cat_${ci}`;
-    c.innerHTML=`<div class="category-title" data-target="${safeId}"><strong>${cat.title}</strong><small> ${cat.chapters.length} lessons ▾</small></div><div class="chapters" id="${safeId}"></div>`;
-    const chaptersDiv=c.querySelector('.chapters');
-    cat.chapters.forEach(ch=>{
-      const chDiv=document.createElement('div'); chDiv.className='chapter-item';
-      chDiv.innerHTML=`<div class="chapter-title">${ch}</div><div class="chapter-actions">
-      <button class="btn explain" data-action="explain">Explanation</button>
-      <button class="btn qa" data-action="qa">Q&A</button>${cat.title.toLowerCase().includes('writing')||cat.title.includes('लेखन')?'':`<button class="btn quiz" data-action="quiz">Quiz</button>`}</div>`;
-      chaptersDiv.appendChild(chDiv);
-    });
-    catList.appendChild(c);
-  });
-
-  // Payment + Price row
-  const paymentDiv=document.createElement('div'); paymentDiv.className='payment';
-  paymentDiv.innerHTML=`<h4>Payment Options</h4><div class="payment-methods">
-  <div class="payment-method" onclick="payCard('${course.name}')">💳 Card</div>
-  <div class="payment-method" onclick="payNetBanking('${course.name}')">🏦 Net Banking</div>
-  <div class="payment-method" onclick="payUPI('${course.name}')">📱 UPI</div>
-  <div class="payment-method" onclick="payWallet('${course.name}')">💰 Wallet</div>
-  <div class="payment-method" onclick="payQRCode('${course.name}')">📲 QR Code</div>
-  </div>`;
-  card.appendChild(paymentDiv);
-
-  const priceRow=document.createElement('div'); priceRow.className='price-row';
-  priceRow.innerHTML=`<div class="price">${course.price} <small style="text-decoration:line-through;color:#aaa;font-weight:500;margin-left:8px">${course.id==='11en'||course.id==='11hi'?'₹199':'₹299'}</small></div>
-  <button class="enroll" onclick="alert('Enrollment demo for ${course.name}')">Enroll Now</button>`;
-  card.appendChild(priceRow);
+// Auth functions
+function showAuthModal() {
+  document.getElementById('authModal').style.display = 'flex';
+  showLogin();
 }
 
-container.appendChild(card);
-});
+function closeModal() {
+  document.getElementById('authModal').style.display = 'none';
+}
+
+function showLogin() {
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('signupForm').style.display = 'none';
+  document.getElementById('adminLoginForm').style.display = 'none';
+}
+
+function showSignup() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('signupForm').style.display = 'block';
+  document.getElementById('adminLoginForm').style.display = 'none';
+}
+
+function showAdminLogin() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('signupForm').style.display = 'none';
+  document.getElementById('adminLoginForm').style.display = 'block';
+}
+
+function login() {
+  const phone = document.getElementById('loginPhone').value;
+  const password = document.getElementById('loginPassword').value;
+  
+  if(!phone || !password) {
+    alert('Please fill all fields');
+    return;
+  }
+  
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const user = users.find(u => u.phone === phone && u.password === password);
+  
+  if(user) {
+    currentUser = user;
+    isAdmin = false;
+    updateAuthState();
+    closeModal();
+    alert('Welcome ' + user.name + '!');
+  } else {
+    alert('Invalid credentials');
+  }
+}
+
+function signup() {
+  const name = document.getElementById('signupName').value;
+  const phone = document.getElementById('signupPhone').value;
+  const studentClass = document.getElementById('signupClass').value;
+  const password = document.getElementById('signupPassword').value;
+  
+  if(!name || !phone || !studentClass || !password) {
+    alert('Please fill all fields');
+    return;
+  }
+  
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  
+  if(users.find(u => u.phone === phone)) {
+    alert('Phone number already registered');
+    return;
+  }
+  
+  const newUser = {
+    id: Date.now(),
+    name,
+    phone,
+    class: studentClass,
+    password,
+    purchasedCourses: [],
+    createdAt: new Date().toISOString()
+  };
+  
+  users.push(newUser);
+  localStorage.setItem('users', JSON.stringify(users));
+  
+  currentUser = newUser;
+  updateAuthState();
+  closeModal();
+  alert('Registration successful! Welcome ' + name + '!');
+}
+
+function adminLogin() {
+  const password = document.getElementById('adminPassword').value;
+  
+  if(password === 'sajan123') {
+    isAdmin = true;
+    currentUser = {name: 'Admin', role: 'admin'};
+    updateAuthState();
+    closeModal();
+    alert('Admin login successful!');
+  } else {
+    alert('Invalid admin password');
+  }
+}
+
+function updateAuthState() {
+  const authButton = document.getElementById('authButton');
+  const adminTab = document.getElementById('adminTab');
+  
+  if(currentUser) {
+    authButton.textContent = isAdmin ? '👨‍💼 Admin' : '👋 ' + currentUser.name.split(' ')[0];
+    authButton.onclick = logout;
+    
+    if(isAdmin) {
+      adminTab.style.display = 'block';
+      loadStudentList();
+    }
+  } else {
+    authButton.textContent = '🔑 Login';
+    authButton.onclick = showAuthModal;
+    adminTab.style.display = 'none';
+  }
+  
+  renderCourses();
+}
+
+function logout() {
+  currentUser = null;
+  isAdmin = false;
+  updateAuthState();
+  showTab('courses');
+}
+
+function loadUserState() {
+  // Auto-load saved user state if needed
+}
+
+// Tab navigation
+function showTab(tabName) {
+  document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+  
+  document.querySelector("[onclick=\"showTab('" + tabName + "')\"]").classList.add('active');
+  document.getElementById(tabName).classList.add('active');
+}
+
+// Course rendering
+function renderCourses() {
+  const container = document.getElementById('coursesContainer');
+  container.innerHTML = '';
+  
+  courses.forEach(course => {
+    const card = document.createElement('div');
+    card.className = 'course-card';
+    
+    const isEnrolled = currentUser && currentUser.purchasedCourses && currentUser.purchasedCourses.includes(course.id);
+    
+    // Calculate total chapters for display
+    let totalChapters = 0;
+    let totalSections = 0;
+    if(course.id === 'complete') {
+      // For complete package, count all chapters from all courses
+      ['11en','12en','11hi','12hi'].forEach(cId => {
+        let c = courses.find(x => x.id === cId);
+        totalSections += c.categories.length;
+        c.categories.forEach(cat => {
+          totalChapters += cat.chapters.length;
+        });
+      });
+    } else {
+      // For individual courses
+      totalSections = course.categories.length;
+      course.categories.forEach(cat => {
+        totalChapters += cat.chapters.length;
+      });
+    }
+    
+    card.innerHTML = '<div class="head"><div><h2>' + course.name + '</h2><div class="summary">' + course.summary + '</div><div style="margin-top: 8px; font-size: 12px; color: #666;">📚 ' + totalChapters + ' Total Chapters | 🎯 ' + totalSections + ' Sections</div></div><div class="chip">' + course.price + '</div></div><div class="course-features" style="margin-top: 12px; padding: 10px; background: #f8f9fa; border-radius: 8px;"><div style="font-size: 13px; font-weight: 500; margin-bottom: 6px;">📋 Course Features:</div><div style="font-size: 12px; color: #666;">✅ Chapter-wise PDF Materials<br>✅ Question & Answer Sessions<br>✅ Interactive Quizzes with Scores<br>✅ Mobile-friendly Learning<br>' + (course.id === 'complete' ? '✅ All 4 Courses Included<br>✅ Maximum Discount' : '') + '</div></div><div class="cat-list"></div>';
+    
+    const catList = card.querySelector('.cat-list');
+    
+    if(course.id === 'complete') {
+      // Complete package handling
+      ['11en','12en','11hi','12hi'].forEach(cId => {
+        let c = courses.find(x => x.id === cId);
+        const catContainer = document.createElement('div');
+        catContainer.className = 'cat';
+        const safeId = 'complete_' + cId;
+        
+        catContainer.innerHTML = '<div class="category-title" data-target="' + safeId + '"><strong>' + c.name + '</strong></div><div class="chapters" id="' + safeId + '"></div>';
+        
+        const chaptersDiv = catContainer.querySelector('.chapters');
+        
+        c.categories.forEach((cat, ci) => {
+          const secDiv = document.createElement('div');
+          secDiv.className = 'cat';
+          const secId = safeId + '_sec_' + ci;
+          
+          secDiv.innerHTML = '<div class="category-title" data-target="' + secId + '"><strong>' + cat.title + '</strong> <small>' + cat.chapters.length + ' lessons ▾</small></div><div class="chapters" id="' + secId + '"></div>';
+          
+          const secChDiv = secDiv.querySelector('.chapters');
+          
+          cat.chapters.forEach(ch => {
+            const chDiv = document.createElement('div');
+            chDiv.className = 'chapter-item';
+            
+            const btnDisabled = !isEnrolled ? 'disabled' : '';
+            const explainBtn = '<button class="btn explain" ' + btnDisabled + ' onclick="openContent(\'' + cId + '\', \'' + cat.title + '\', \'' + ch + '\', \'explanation\')">Explanation</button>';
+            const qaBtn = '<button class="btn qa" ' + btnDisabled + ' onclick="openContent(\'' + cId + '\', \'' + cat.title + '\', \'' + ch + '\', \'qa\')">Q&A</button>';
+            const quizBtn = (cat.title.toLowerCase().includes('writing') || cat.title.includes('लेखन')) ? '' : '<button class="btn quiz" ' + btnDisabled + ' onclick="openQuiz(\'' + cId + '\', \'' + cat.title + '\', \'' + ch + '\')">Quiz</button>';
+            
+            chDiv.innerHTML = '<div class="chapter-title">' + ch + '</div><div class="chapter-actions">' + explainBtn + qaBtn + quizBtn + '</div>';
+            secChDiv.appendChild(chDiv);
+          });
+          chaptersDiv.appendChild(secDiv);
+        });
+        
+        catList.appendChild(catContainer);
+      });
+    } else {
+      // Individual course handling
+      course.categories.forEach((cat, ci) => {
+        const c = document.createElement('div');
+        c.className = 'cat';
+        const safeId = course.id + '_cat_' + ci;
+        
+        c.innerHTML = '<div class="category-title" data-target="' + safeId + '"><strong>' + cat.title + '</strong><small>' + cat.chapters.length + ' lessons ▾</small></div><div class="chapters" id="' + safeId + '"></div>';
+        
+        const chaptersDiv = c.querySelector('.chapters');
+        
+        cat.chapters.forEach(ch => {
+          const chDiv = document.createElement('div');
+          chDiv.className = 'chapter-item';
+          
+          const btnDisabled = !isEnrolled ? 'disabled' : '';
+          const explainBtn = '<button class="btn explain" ' + btnDisabled + ' onclick="openContent(\'' + course.id + '\', \'' + cat.title + '\', \'' + ch + '\', \'explanation\')">Explanation</button>';
+          const qaBtn = '<button class="btn qa" ' + btnDisabled + ' onclick="openContent(\'' + course.id + '\', \'' + cat.title + '\', \'' + ch + '\', \'qa\')">Q&A</button>';
+          const quizBtn = (cat.title.toLowerCase().includes('writing') || cat.title.includes('लेखन')) ? '' : '<button class="btn quiz" ' + btnDisabled + ' onclick="openQuiz(\'' + course.id + '\', \'' + cat.title + '\', \'' + ch + '\')">Quiz</button>';
+          
+          chDiv.innerHTML = '<div class="chapter-title">' + ch + '</div><div class="chapter-actions">' + explainBtn + qaBtn + quizBtn + '</div>';
+          chaptersDiv.appendChild(chDiv);
+        });
+        
+        catList.appendChild(c);
+      });
+    }
+    
+    // Add payment/enrollment section
+    const actionDiv = document.createElement('div');
+    if(isEnrolled) {
+      actionDiv.innerHTML = '<div class="price-row"><div style="color: #28a745; font-weight: bold; display: flex; align-items: center; gap: 5px;">✓ <span>Enrolled & Active</span></div><button class="enroll" style="background: #28a745;" disabled>Access Content</button></div>';
+    } else {
+      const originalPrice = course.id === '11en' || course.id === '11hi' ? '₹199' : 
+                           course.id === '12en' || course.id === '12hi' ? '₹299' : '₹899';
+      
+      actionDiv.innerHTML = '<div class="price-row"><div class="price">' + course.price + ' <small style="text-decoration:line-through;color:#aaa;font-weight:500;margin-left:8px;">' + originalPrice + '</small><div style="font-size: 11px; color: #28a745; margin-top: 2px;">💰 Save ' + (parseInt(originalPrice.replace('₹','')) - parseInt(course.price.replace('₹',''))) + '/-</div></div><button class="enroll" onclick="initiatePayment(\'' + course.id + '\', \'' + course.name + '\', \'' + course.price + '\')">🛒 Enroll Now</button></div><div style="text-align: center; margin-top: 8px; font-size: 11px; color: #666;">💳 Secure Payment | 📱 Instant Access</div>';
+    }
+    
+    card.appendChild(actionDiv);
+    container.appendChild(card);
+  });
+}
+
+// Payment functions
+function initiatePayment(courseId, courseName, price) {
+  if(!currentUser) {
+    alert('Please login first');
+    showAuthModal();
+    return;
+  }
+  
+  document.getElementById('paymentTitle').textContent = 'Payment for ' + courseName;
+  document.getElementById('paymentAmount').textContent = price;
+  document.getElementById('paymentModal').style.display = 'flex';
+  
+  // Store payment details
+  window.pendingPayment = {courseId, courseName, price};
+}
+
+function closePaymentModal() {
+  document.getElementById('paymentModal').style.display = 'none';
+}
+
+function confirmPayment() {
+  if(!window.pendingPayment) return;
+  
+  const courseId = window.pendingPayment.courseId;
+  
+  // Add course to user's purchased courses
+  if(!currentUser.purchasedCourses) {
+    currentUser.purchasedCourses = [];
+  }
+  
+  currentUser.purchasedCourses.push(courseId);
+  
+  // Update in localStorage
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const userIndex = users.findIndex(u => u.id === currentUser.id);
+  if(userIndex !== -1) {
+    users[userIndex] = currentUser;
+    localStorage.setItem('users', JSON.stringify(users));
+  }
+  
+  closePaymentModal();
+  renderCourses();
+  alert('Payment confirmed! You can now access all course materials.');
+}
+
+// Content functions
+function openContent(courseId, category, chapter, type) {
+  if(!currentUser || !currentUser.purchasedCourses.includes(courseId)) {
+    alert('Please enroll in this course first');
+    return;
+  }
+  
+  const contentKey = courseId + '_' + category + '_' + chapter + '_' + type;
+  const content = localStorage.getItem(contentKey);
+  
+  if(content) {
+    document.getElementById('contentTitle').textContent = chapter + ' - ' + type.charAt(0).toUpperCase() + type.slice(1);
+    document.getElementById('pdfViewer').src = content;
+    document.getElementById('contentViewer').style.display = 'block';
+  } else {
+    alert('Content not uploaded yet. Please contact Sajan Sir.');
+  }
+}
+
+function closeContentViewer() {
+  document.getElementById('contentViewer').style.display = 'none';
+  document.getElementById('pdfViewer').src = '';
+}
+
+// Quiz functions
+function openQuiz(courseId, category, chapter) {
+  if(!currentUser || !currentUser.purchasedCourses.includes(courseId)) {
+    alert('Please enroll in this course first');
+    return;
+  }
+  
+  const quizKey = 'quiz_' + courseId + '_' + category + '_' + chapter;
+  const quizData = localStorage.getItem(quizKey);
+  
+  if(quizData) {
+    currentQuizData = JSON.parse(quizData);
+    currentQuizAnswers = {};
+    renderQuiz(chapter);
+    document.getElementById('quizContainer').style.display = 'block';
+  } else {
+    alert('Quiz not available yet. Please contact Sajan Sir.');
+  }
+}
+
+function renderQuiz(chapterName) {
+  document.getElementById('quizTitle').textContent = 'Quiz: ' + chapterName;
+  const content = document.getElementById('quizContent');
+  content.innerHTML = '';
+  
+  currentQuizData.forEach(function(q, qIndex) {
+    const qDiv = document.createElement('div');
+    qDiv.className = 'quiz-question';
+    
+    const optionsHtml = q.options.map(function(option, oIndex) {
+      return '<div class="quiz-option" onclick="selectAnswer(' + qIndex + ', ' + oIndex + ')">' + String.fromCharCode(65 + oIndex) + '. ' + option + '</div>';
+    }).join('');
+    
+    qDiv.innerHTML = '<div style="font-weight: bold; margin-bottom: 10px;">' + (qIndex + 1) + '. ' + q.question + '</div><div class="quiz-options">' + optionsHtml + '</div>';
+    
+    content.appendChild(qDiv);
+  });
+  
+  document.getElementById('submitQuiz').style.display = 'block';
+  document.getElementById('quizResult').innerHTML = '';
+}
+
+function selectAnswer(questionIndex, optionIndex) {
+  currentQuizAnswers[questionIndex] = optionIndex;
+  
+  // Update UI
+  const questionDiv = document.querySelectorAll('.quiz-question')[questionIndex];
+  const options = questionDiv.querySelectorAll('.quiz-option');
+  options.forEach(function(opt) { opt.classList.remove('selected'); });
+  options[optionIndex].classList.add('selected');
+}
+
+function submitQuiz() {
+  let correct = 0;
+  const total = currentQuizData.length;
+  
+  currentQuizData.forEach(function(q, index) {
+    if(currentQuizAnswers[index] === q.correctAnswer) {
+      correct++;
+    }
+  });
+  
+  const percentage = Math.round((correct / total) * 100);
+  
+  document.getElementById('quizResult').innerHTML = '<div class="quiz-score"><h3>Quiz Results</h3><div style="font-size: 24px; margin: 15px 0;">' + correct + '/' + total + ' (' + percentage + '%)</div><div style="color: ' + (percentage >= 70 ? '#28a745' : '#dc3545') + '">' + (percentage >= 70 ? '🎉 Well Done!' : '📚 Keep Studying!') + '</div></div>';
+  
+  document.getElementById('submitQuiz').style.display = 'none';
+}
+
+function closeQuiz() {
+  document.getElementById('quizContainer').style.display = 'none';
+  currentQuizData = [];
+  currentQuizAnswers = {};
+}
+
+// Admin functions
+function loadChapters() {
+  const courseId = document.getElementById('adminCourse').value;
+  const chapterSelect = document.getElementById('adminChapter');
+  
+  chapterSelect.innerHTML = '<option value="">Select Chapter</option>';
+  
+  if(courseId) {
+    const course = courses.find(function(c) { return c.id === courseId; });
+    if(course) {
+      course.categories.forEach(function(cat) {
+        cat.chapters.forEach(function(ch) {
+          const option = document.createElement('option');
+          option.value = cat.title + '_' + ch;
+          option.textContent = cat.title + ' - ' + ch;
+          chapterSelect.appendChild(option);
+        });
+      });
+    }
+  }
+}
+
+function uploadContent(type) {
+  const courseId = document.getElementById('adminCourse').value;
+  const chapterValue = document.getElementById('adminChapter').value;
+  
+  if(!courseId || !chapterValue) {
+    alert('Please select course and chapter');
+    return;
+  }
+  
+  const parts = chapterValue.split('_');
+  const category = parts[0];
+  const chapter = parts.slice(1).join('_'); // Handle chapter names with underscores
+  const fileInput = document.getElementById(type === 'explanation' ? 'explanationPdf' : 'qaPdf');
+  const file = fileInput.files[0];
+  
+  if(!file) {
+    alert('Please select a PDF file');
+    return;
+  }
+  
+  if(file.type !== 'application/pdf') {
+    alert('Please select only PDF files');
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const contentKey = courseId + '_' + category + '_' + chapter + '_' + type;
+    localStorage.setItem(contentKey, e.target.result);
+    alert(type.charAt(0).toUpperCase() + type.slice(1) + ' PDF uploaded successfully for "' + chapter + '"!');
+    fileInput.value = '';
+  };
+  
+  reader.readAsDataURL(file);
+}
+
+function addQuizQuestion() {
+  const question = document.getElementById('quizQuestion').value;
+  const options = Array.from(document.querySelectorAll('.option-input')).map(function(input) { return input.value; });
+  const correctAnswer = parseInt(document.getElementById('correctAnswer').value);
+  
+  if(!question || options.some(function(opt) { return !opt; }) || isNaN(correctAnswer)) {
+    alert('Please fill all fields');
+    return;
+  }
+  
+  if(!window.currentQuizBuilder) {
+    window.currentQuizBuilder = [];
+  }
+  
+  window.currentQuizBuilder.push({
+    question: question,
+    options: options,
+    correctAnswer: correctAnswer
+  });
+  
+  // Clear form
+  document.getElementById('quizQuestion').value = '';
+  document.querySelectorAll('.option-input').forEach(function(input) { input.value = ''; });
+  document.getElementById('correctAnswer').value = '';
+  
+  // Update preview
+  updateQuizPreview();
+}
+
+function updateQuizPreview() {
+  const preview = document.getElementById('quizPreview');
+  
+  if(!window.currentQuizBuilder || window.currentQuizBuilder.length === 0) {
+    preview.innerHTML = '<p>No questions added yet</p>';
+    return;
+  }
+  
+  const questionsHtml = window.currentQuizBuilder.map(function(q, index) {
+    const optionsHtml = q.options.map(function(opt, i) {
+      const isCorrect = i === q.correctAnswer;
+      return '<div style="color: ' + (isCorrect ? '#28a745' : '#666') + '; ' + (isCorrect ? 'font-weight: bold;' : '') + '">' + String.fromCharCode(65 + i) + '. ' + opt + (isCorrect ? ' ✓' : '') + '</div>';
+    }).join('');
+    
+    return '<div style="background: white; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd;"><strong>' + (index + 1) + '. ' + q.question + '</strong><div style="margin-left: 20px; margin-top: 5px;">' + optionsHtml + '</div></div>';
+  }).join('');
+  
+  preview.innerHTML = '<h4>Quiz Preview:</h4>' + questionsHtml;
+}
+
+function saveQuiz() {
+  const courseId = document.getElementById('adminCourse').value;
+  const chapterValue = document.getElementById('adminChapter').value;
+  
+  if(!courseId || !chapterValue) {
+    alert('Please select course and chapter');
+    return;
+  }
+  
+  if(!window.currentQuizBuilder || window.currentQuizBuilder.length === 0) {
+    alert('Please add at least one question');
+    return;
+  }
+  
+  const parts = chapterValue.split('_');
+  const category = parts[0];
+  const chapter = parts.slice(1).join('_'); // Handle chapter names with underscores
+  const quizKey = 'quiz_' + courseId + '_' + category + '_' + chapter;
+  
+  localStorage.setItem(quizKey, JSON.stringify(window.currentQuizBuilder));
+  
+  alert('Quiz saved successfully for "' + chapter + '"!');
+  window.currentQuizBuilder = [];
+  updateQuizPreview();
+}
+
+function loadStudentList() {
+  if(!isAdmin) return;
+  
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const studentList = document.getElementById('studentList');
+  
+  if(!studentList) return;
+  
+  studentList.innerHTML = '<h4>Registered Students:</h4>';
+  
+  if(users.length === 0) {
+    studentList.innerHTML += '<p>No students registered yet</p>';
+    return;
+  }
+  
+  users.forEach(function(user) {
+    const studentDiv = document.createElement('div');
+    studentDiv.style.cssText = 'background: white; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd;';
+    
+    const purchasedCourses = user.purchasedCourses || [];
+    const courseNames = purchasedCourses.map(function(courseId) {
+      const course = courses.find(function(c) { return c.id === courseId; });
+      return course ? course.name : courseId;
+    }).join(', ');
+    
+    studentDiv.innerHTML = '<strong>' + user.name + '</strong><br><small>📞 Phone: ' + user.phone + ' | 🎓 Class: ' + user.class + '</small><br><small>📚 Courses: ' + (courseNames || 'None purchased') + '</small><br><small>📅 Registered: ' + new Date(user.createdAt).toLocaleDateString() + '</small>';
+    
+    studentList.appendChild(studentDiv);
+  });
+}
 
 // Accordion toggle
-document.addEventListener('click', e=>{
-const catTitle=e.target.closest('.category-title');
-if(catTitle){
-const tgt=document.getElementById(catTitle.dataset.target);
-const isOpen=tgt.style.display==='block';
-document.querySelectorAll('.chapters').forEach(d=>d.style.display='none');
-if(!isOpen) tgt.style.display='block';
-}
+document.addEventListener('click', function(e) {
+  const catTitle = e.target.closest('.category-title');
+  if(catTitle && catTitle.dataset.target) {
+    const tgt = document.getElementById(catTitle.dataset.target);
+    if(tgt) {
+      const isOpen = tgt.style.display === 'block';
+      // Close all chapters in this card first
+      const card = catTitle.closest('.course-card');
+      card.querySelectorAll('.chapters').forEach(function(d) { d.style.display = 'none'; });
+      
+      if(!isOpen) tgt.style.display = 'block';
+    }
+  }
 });
 
-// Chapter buttons
-document.addEventListener('click', e=>{
-const btn=e.target.closest('button'); if(!btn||!btn.dataset.action) return;
-const chapter=btn.closest('.chapter-item').querySelector('.chapter-title').innerText;
-alert(`${btn.dataset.action.toUpperCase()} clicked for "${chapter}"`);
-});
-
-// Payment simulation
-function payCard(course){alert('Pay via Card for '+course)}
-function payNetBanking(course){alert('Pay via Net Banking for '+course)}
-function payUPI(course){alert('Pay via UPI for '+course)}
-function payWallet(course){alert('Pay via Wallet for '+course)}
-function payQRCode(course){alert('QR Code payment demo for '+course)}
+// Initialize
+renderCourses();
 </script>
+
 </body>
 </html>
