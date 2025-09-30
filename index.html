@@ -934,6 +934,94 @@ document.addEventListener('click', function(e) {
 // Initialize
 renderCourses();
 </script>
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+  import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDMvN_U9CXLJiWpHfG-YDBLQTsH4bXffwc",
+    authDomain: "sajan-online-classes.firebaseapp.com",
+    projectId: "sajan-online-classes",
+    storageBucket: "sajan-online-classes.firebasestorage.app",
+    messagingSenderId: "590917508121",
+    appId: "1:590917508121:web:cc9e0e581a311470031e88",
+    measurementId: "G-KNDDJNDL8W"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Check user authentication state
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        document.getElementById('user-section').classList.add('active');
+        document.getElementById('user-email').textContent = user.email;
+        document.querySelector('.auth-toggle').style.display = 'none';
+    } else {
+        document.getElementById('user-section').classList.remove('active');
+        document.querySelector('.auth-toggle').style.display = 'block';
+    }
+});
+
+// Signup Function
+window.signup = function() {
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    
+    createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            alert('Signup successful! ✅');
+            closeModal('signup-modal');
+        })
+        .catch((error) => {
+            alert('Error: ' + error.message);
+        });
+}
+
+// Login Function
+window.login = function() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    
+    signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            alert('Login successful! ✅');
+            closeModal('login-modal');
+        })
+        .catch((error) => {
+            alert('Error: ' + error.message);
+        });
+}
+
+// Logout Function
+window.logout = function() {
+    signOut(auth).then(() => {
+        alert('Logged out successfully! 👋');
+    });
+}
+
+// Modal Functions
+window.openModal = function(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+
+window.closeModal = function(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// Render Courses (aapka existing function)
+function renderCourses() {
+    // Your existing course rendering code
+}
+
+// Initialize
+renderCourses();
+</script>
 </body>
 </html>
