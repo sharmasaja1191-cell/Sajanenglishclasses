@@ -1,358 +1,1654 @@
 <!doctype html>
 <html lang="hi">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sajan English Classes - Learning Platform</title>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<style>
-/* Reset & Body */
-*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,system-ui,Segoe UI,Roboto,'Noto Sans',sans-serif}
-body{background:linear-gradient(135deg,#f06 0%,#c64 45%,#9b4 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
-/* Phone container */
-.phone{width:360px;max-width:95vw;background:linear-gradient(180deg,#fff,#fafafa);border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,0.25);overflow:hidden;position:relative}
-/* Header */
-header{background:linear-gradient(90deg,#ff6bb5,#7b5cff);color:#fff;padding:22px 18px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
-header .title{display:flex;align-items:center;gap:12px}
-header h1{font-size:18px;letter-spacing:0.2px}
-header p{font-size:12px;opacity:0.9;margin-top:6px}
-.auth-toggle{position:absolute;top:20px;right:20px;background:rgba(255,255,255,0.2);border:none;color:white;padding:8px 12px;border-radius:20px;cursor:pointer;font-size:11px}
-/* Modal */
-.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center}
-.modal-content{background:white;border-radius:12px;padding:24px;width:320px;max-width:90vw;position:relative}
-.modal h3{margin-bottom:16px;color:#333}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;margin-bottom:4px;font-size:14px;color:#555}
-.form-group input,.form-group select{width:100%;padding:10px;border:1px solid #ddd;border-radius:8px;font-size:14px}
-.btn-primary{width:100%;padding:12px;background:linear-gradient(90deg,#7b5cff,#4ca0ff);color:white;border:none;border-radius:8px;cursor:pointer;font-size:14px}
-.btn-secondary{background:#f8f9fa;color:#666;margin-top:8px}
-.btn-danger{background: #dc3545; color: white;}
-.close-modal{position:absolute;top:10px;right:10px;background:#f0f0f0;color:#333;border:none;font-size:28px;cursor:pointer;width:32px;height:32px;border-radius:50%;line-height:32px;text-align:center;transition:all .2s ease}
-.close-modal:hover{background:#e0e0e0;transform:rotate(90deg)}
-/* Admin Panel Additions */
-.uploaded-file-item { display: flex; justify-content: space-between; align-items: center; background: white; padding: 8px; border-radius: 6px; margin-top: 8px; border: 1px solid #eee;}
-.uploaded-file-item span { font-size: 13px; }
-.uploaded-file-item button { padding: 5px 10px; font-size: 11px; }
-/* Other Styles remain unchanged */
-.contact{padding:16px;background:#0dbb67;color:#fff;margin:14px;border-radius:12px;box-shadow:0 6px 18px rgba(13,187,103,0.18)}.contact .line{display:flex;justify-content:space-between;align-items:center}.contact small{opacity:0.95}.contact > div{display:flex;gap:10px;margin-top:10px}.nav-tabs{display:flex;background:#f8f9fa;margin:14px;border-radius:12px;overflow:hidden}.nav-tab{flex:1;padding:12px 8px;text-align:center;background:transparent;border:none;cursor:pointer;font-size:12px;color:#666}.nav-tab.active{background:linear-gradient(90deg,#7b5cff,#4ca0ff);color:white}.card-wrap{padding:18px}.course-card{background:#fff;border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 10px 20px rgba(12,20,40,0.06);border:1px solid rgba(15,20,30,0.02)}.course-card .head{display:flex;justify-content:space-between;align-items:center}.course-card h2{font-size:16px}.chip{font-size:12px;padding:6px 10px;border-radius:20px;background:linear-gradient(90deg,#7b5cff,#4ca0ff);color:#fff}.summary{margin-top:10px;font-size:13px;color:#666}.cat{margin-top:12px}.category-title{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:#f7f8fb;border:1px dashed rgba(0,0,0,0.03);cursor:pointer}.chapters{padding:8px 10px;display:none}.chapter-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;margin-top:8px;background:linear-gradient(180deg,#fff,#f9fbff);border:1px solid rgba(15,20,30,0.02);flex-direction:column;align-items:flex-start}.chapter-title{font-size:14px;margin-bottom:6px}.chapter-actions{display:flex;gap:8px}.btn{padding:8px 10px;border-radius:8px;border:none;cursor:pointer;font-size:12px}.btn.explain{background:#e6f6ff}.btn.qa{background:#fff1e6}.btn.quiz{background:#f3e9ff}.btn:disabled{opacity:0.5;cursor:not-allowed}.price-row{display:flex;align-items:center;justify-content:space-between;margin-top:12px}.price{color:#ff2f6d;font-weight:700}.enroll{padding:8px 12px;border-radius:18px;background:linear-gradient(90deg,#6b7bff,#a758ff);color:#fff;border:none;cursor:pointer}.admin-panel{display:none;padding:20px}.admin-section{margin-bottom:20px;padding:15px;background:#f8f9fa;border-radius:10px}.admin-section h3{margin-bottom:10px;color:#333}.file-upload{margin-bottom:10px}.file-upload input{margin-bottom:5px}.content-viewer{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:white;z-index:2000;overflow-y:auto}.content-header{background:linear-gradient(90deg,#ff6bb5,#7b5cff);color:white;padding:15px;display:flex;justify-content:space-between;align-items:center}.content-body{padding:20px}.pdf-viewer{width:100%;height:600px;border:1px solid #ddd;border-radius:8px}.tab-content{display:none}.tab-content.active{display:block}
-</style>
-</head>
-<body>
-<div class="phone" role="application">
-    <div id="authModal" class="modal">
-        <div class="modal-content">
-          <button class="close-modal" onclick="closeModal()">&times;</button>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sajan English Classes - Learning Platform</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Inter, system-ui, Segoe UI, Roboto, 'Noto Sans', sans-serif
+      }
+
+      body {
+        background: linear-gradient(135deg, #f06 0, #c64 45%, #9b4 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px
+      }
+
+      .phone {
+        width: 360px;
+        max-width: 95vw;
+        background: linear-gradient(180deg, #fff, #fafafa);
+        border-radius: 18px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, .25);
+        overflow: hidden;
+        position: relative
+      }
+
+      header {
+        background: linear-gradient(90deg, #ff6bb5, #7b5cff);
+        color: #fff;
+        padding: 22px 18px;
+        border-bottom-left-radius: 22px;
+        border-bottom-right-radius: 22px
+      }
+
+      header .title {
+        display: flex;
+        align-items: center;
+        gap: 12px
+      }
+
+      header h1 {
+        font-size: 18px;
+        letter-spacing: .2px
+      }
+
+      header p {
+        font-size: 12px;
+        opacity: .9;
+        margin-top: 6px
+      }
+
+      .auth-toggle {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, .2);
+        border: none;
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 11px
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .7);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center
+      }
+
+      .modal-content {
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        width: 320px;
+        max-width: 90vw;
+        position: relative
+      }
+
+      .modal h3 {
+        margin-bottom: 16px;
+        color: #333
+      }
+
+      .form-group {
+        margin-bottom: 16px
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 14px;
+        color: #555
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px
+      }
+
+      .btn-primary {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(90deg, #7b5cff, #4ca0ff);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px
+      }
+
+      .btn-secondary {
+        background: #f8f9fa;
+        color: #666;
+        margin-top: 8px
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #f0f0f0;
+        color: #333;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        line-height: 32px;
+        text-align: center;
+        transition: all .2s ease
+      }
+
+      .close-modal:hover {
+        background: #e0e0e0;
+        transform: rotate(90deg)
+      }
+
+      .loading {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .8);
+        z-index: 3000;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: #fff
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #7b5cff;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0)
+        }
+
+        100% {
+          transform: rotate(360deg)
+        }
+      }
+
+      .contact {
+        padding: 16px;
+        background: #0dbb67;
+        color: #fff;
+        margin: 14px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(13, 187, 103, .18)
+      }
+
+      .contact .line {
+        display: flex;
+        justify-content: space-between;
+        align-items: center
+      }
+
+      .contact small {
+        opacity: .95
+      }
+
+      .contact>div {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px
+      }
+
+      .nav-tabs {
+        display: flex;
+        background: #f8f9fa;
+        margin: 14px;
+        border-radius: 12px;
+        overflow: hidden
+      }
+
+      .nav-tab {
+        flex: 1;
+        padding: 12px 8px;
+        text-align: center;
+        background: 0 0;
+        border: none;
+        cursor: pointer;
+        font-size: 12px;
+        color: #666
+      }
+
+      .nav-tab.active {
+        background: linear-gradient(90deg, #7b5cff, #4ca0ff);
+        color: #fff
+      }
+
+      .card-wrap {
+        padding: 18px
+      }
+
+      .course-card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 10px 20px rgba(12, 20, 40, .06);
+        border: 1px solid rgba(15, 20, 30, .02)
+      }
+
+      .course-card .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center
+      }
+
+      .course-card h2 {
+        font-size: 16px
+      }
+
+      .chip {
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 20px;
+        background: linear-gradient(90deg, #7b5cff, #4ca0ff);
+        color: #fff
+      }
+
+      .summary {
+        margin-top: 10px;
+        font-size: 13px;
+        color: #666
+      }
+
+      .cat {
+        margin-top: 12px
+      }
+
+      .category-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-radius: 10px;
+        background: #f7f8fb;
+        border: 1px dashed rgba(0, 0, 0, .03);
+        cursor: pointer
+      }
+
+      .chapters {
+        padding: 8px 10px;
+        display: none
+      }
+
+      .chapter-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        border-radius: 10px;
+        margin-top: 8px;
+        background: linear-gradient(180deg, #fff, #f9fbff);
+        border: 1px solid rgba(15, 20, 30, .02);
+        flex-direction: column;
+        align-items: flex-start
+      }
+
+      .chapter-title {
+        font-size: 14px;
+        margin-bottom: 6px
+      }
+
+      .chapter-actions {
+        display: flex;
+        gap: 8px
+      }
+
+      .btn {
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-size: 12px
+      }
+
+      .btn.explain {
+        background: #e6f6ff
+      }
+
+      .btn.qa {
+        background: #fff1e6
+      }
+
+      .btn.quiz {
+        background: #f3e9ff
+      }
+
+      .btn:disabled {
+        opacity: .5;
+        cursor: not-allowed
+      }
+
+      .price-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 12px
+      }
+
+      .price {
+        color: #ff2f6d;
+        font-weight: 700
+      }
+
+      .enroll {
+        padding: 8px 12px;
+        border-radius: 18px;
+        background: linear-gradient(90deg, #6b7bff, #a758ff);
+        color: #fff;
+        border: none;
+        cursor: pointer
+      }
+
+      .admin-panel {
+        display: none;
+        padding: 20px
+      }
+
+      .admin-section {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px
+      }
+
+      .admin-section h3 {
+        margin-bottom: 10px;
+        color: #333
+      }
+
+      .file-upload {
+        margin-bottom: 10px
+      }
+
+      .file-upload input {
+        margin-bottom: 5px
+      }
+
+      .quiz-builder {
+        margin-top: 10px
+      }
+
+      .option-input {
+        margin-bottom: 5px
+      }
+
+      .content-list {
+        margin-top: 15px;
+        max-height: 300px;
+        overflow-y: auto
+      }
+
+      .content-item {
+        background: #fff;
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center
+      }
+
+      .content-item-info {
+        flex: 1
+      }
+
+      .content-item-actions {
+        display: flex;
+        gap: 5px
+      }
+
+      .btn-delete {
+        background: #dc3545;
+        color: #fff;
+        padding: 6px 10px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 11px
+      }
+
+      .btn-delete:hover {
+        background: #c82333
+      }
+
+      .content-viewer {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        z-index: 2000;
+        overflow-y: auto
+      }
+
+      .content-header {
+        background: linear-gradient(90deg, #ff6bb5, #7b5cff);
+        color: #fff;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center
+      }
+
+      .content-body {
+        padding: 20px
+      }
+
+      .pdf-viewer {
+        width: 100%;
+        height: 600px;
+        border: 1px solid #ddd;
+        border-radius: 8px
+      }
+
+      .quiz-container {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        z-index: 2000;
+        overflow-y: auto
+      }
+
+      .quiz-question {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px
+      }
+
+      .quiz-options {
+        margin-top: 10px
+      }
+
+      .quiz-option {
+        display: block;
+        margin-bottom: 8px;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer
+      }
+
+      .quiz-option:hover {
+        background: #e6f6ff
+      }
+
+      .quiz-option.selected {
+        background: #7b5cff;
+        color: #fff
+      }
+
+      .quiz-score {
+        text-align: center;
+        padding: 20px;
+        font-size: 18px;
+        font-weight: 700
+      }
+
+      .qr-payment {
+        text-align: center;
+        padding: 20px
+      }
+
+      .qr-code {
+        width: 200px;
+        height: 200px;
+        background: #f0f0f0;
+        margin: 20px auto;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        color: #666
+      }
+
+      .payment-info {
+        margin-top: 15px;
+        font-size: 13px;
+        color: #666
+      }
+
+      @media (max-width:420px) {
+        .phone {
+          width: 94vw
+        }
+      }
+
+      .tab-content {
+        display: none
+      }
+
+      .tab-content.active {
+        display: block
+      }
+
+      .upload-progress {
+        margin-top: 10px;
+        padding: 10px;
+        background: #e6f6ff;
+        border-radius: 8px;
+        font-size: 13px
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loadingSpinner" class="loading">
+      <div class="spinner"></div>
+      <p style="margin-top:15px">Loading...</p>
+    </div>
+    <div class="phone" role="application">
+      <div id="authModal" class="modal">
+        <div class="modal-content"><button class="close-modal" onclick="closeModal()">&times;</button>
           <div id="loginForm">
             <h3>Student Login</h3>
-            <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="Enter your email"></div>
-            <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter password"></div>
-            <button class="btn-primary" onclick="login()">Login</button>
-            <button class="btn-primary btn-secondary" onclick="showSignup()">New Student? Register</button>
-            <button class="btn-primary btn-secondary" onclick="showAdminLogin()">Admin Login</button>
+            <div class="form-group"><label>Phone Number</label><input type="tel" id="loginPhone" placeholder="Enter phone number"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter password"></div><button class="btn-primary" onclick="login()">Login</button><button class="btn-primary btn-secondary" onclick="showSignup()">New Student? Register</button><button class="btn-primary btn-secondary" onclick="showAdminLogin()">Admin Login</button>
           </div>
           <div id="signupForm" style="display:none">
             <h3>Student Registration</h3>
             <div class="form-group"><label>Full Name</label><input type="text" id="signupName" placeholder="Enter full name"></div>
-            <div class="form-group"><label>Email Address</label><input type="email" id="signupEmail" placeholder="Enter email address"></div>
             <div class="form-group"><label>Phone Number</label><input type="tel" id="signupPhone" placeholder="Enter phone number"></div>
-            <div class="form-group"><label>Class</label><select id="signupClass"><option value="">Select Class</option><option value="11">Class 11th</option><option value="12">Class 12th</option></select></div>
-            <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Create password"></div>
-            <button class="btn-primary" onclick="signup()">Register</button>
-            <button class="btn-primary btn-secondary" onclick="showLogin()">Already registered? Login</button>
+            <div class="form-group"><label>Class</label><select id="signupClass">
+                <option value="">Select Class</option>
+                <option value="11">Class 11th</option>
+                <option value="12">Class 12th</option>
+              </select></div>
+            <div class="form-group"><label>Password</label><input type="password" id="signupPassword" placeholder="Create password (min 6 characters)"></div><button class="btn-primary" onclick="signup()">Register</button><button class="btn-primary btn-secondary" onclick="showLogin()">Already registered? Login</button>
           </div>
           <div id="adminLoginForm" style="display:none">
             <h3>Admin Login</h3>
             <div class="form-group"><label>Admin Email</label><input type="email" id="adminEmail" placeholder="Enter admin email"></div>
-            <div class="form-group"><label>Admin Password</label><input type="password" id="adminPassword" placeholder="Enter admin password"></div>
-            <button class="btn-primary" onclick="adminLogin()">Admin Login</button>
-            <button class="btn-primary btn-secondary" onclick="showLogin()">Back to Student Login</button>
+            <div class="form-group"><label>Admin Password</label><input type="password" id="adminPassword" placeholder="Enter admin password"></div><button class="btn-primary" onclick="adminLogin()">Admin Login</button><button class="btn-primary btn-secondary" onclick="showLogin()">Back to Student Login</button>
           </div>
         </div>
-    </div>
-    <header>
+      </div>
+      <header>
         <div class="title">
-          <div style="width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center">  📚  </div>
+          <div style="width:44px;height:44px;border-radius:10px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center">📚</div>
           <div>
             <h1>Sajan English Classes</h1>
-            <p>Complete Chapter-wise Learning Platform /   सम्पूर्ण पाठ्यक्रम  </p>
+            <p>Complete Chapter-wise Learning Platform / संपूर्ण पाठ्यक्रम</p>
+          </div>
+        </div><button class="auth-toggle" onclick="showAuthModal()" id="authButton">🔐 Login</button>
+      </header>
+      <div class="contact">
+        <div class="line"><small>📞 संपर्क: Sajan Sir</small><small>Professional English & Hindi Teacher</small></div>
+        <div>
+          <div style="flex:1;background:rgba(255,255,255,.08);padding:10px;border-radius:8px;text-align:center">📱<br><small>Mobile<br>6299891191</small></div>
+          <div style="flex:1;background:rgba(255,255,255,.08);padding:10px;border-radius:8px;text-align:center">💬<br><small>WhatsApp<br>6299891191</small></div>
+        </div>
+      </div>
+      <div class="nav-tabs"><button class="nav-tab active" onclick='showTab("courses")'>Courses</button><button class="nav-tab" id="adminTab" onclick='showTab("admin")' style="display:none">Admin</button></div>
+      <div id="courses" class="tab-content active">
+        <div class="card-wrap" id="coursesContainer"></div>
+      </div>
+      <div id="admin" class="tab-content admin-panel">
+        <div class="admin-section">
+          <h3>Upload Content</h3><select id="adminCourse" onchange="loadChapters()">
+            <option value="">Select Course</option>
+            <option value="11en">Class 11th English</option>
+            <option value="12en">Class 12th English</option>
+            <option value="11hi">Class 11th Hindi</option>
+            <option value="12hi">Class 12th Hindi</option>
+          </select><select id="adminChapter" style="margin-top:10px">
+            <option value="">Select Chapter</option>
+          </select>
+          <div class="file-upload" style="margin-top:15px">
+            <h4>Upload Explanation PDF</h4><input type="file" id="explanationPdf" accept=".pdf"><button class="btn-primary" onclick='uploadContent("explanation")'>Upload Explanation</button>
+            <div id="explanationProgress" class="upload-progress" style="display:none"></div>
+          </div>
+          <div class="file-upload">
+            <h4>Upload Q&A PDF</h4><input type="file" id="qaPdf" accept=".pdf"><button class="btn-primary" onclick='uploadContent("qa")'>Upload Q&A</button>
+            <div id="qaProgress" class="upload-progress" style="display:none"></div>
           </div>
         </div>
-        <button class="auth-toggle" onclick="showAuthModal()" id="authButton">  🔑   Login</button>
-    </header>
-    <div class="contact">
-        <div class="line"><small>  📞     संपर्क  : Sajan Sir</small><small>Professional English & Hindi Teacher</small></div>
-        <div>
-          <div style="flex:1;background:rgba(255,255,255,0.08);padding:10px;border-radius:8px;text-align:center">  📱  <br><small>Mobile<br>6299891191</small></div>
-          <div style="flex:1;background:rgba(255,255,255,0.08);padding:10px;border-radius:8px;text-align:center">  💬  <br><small>WhatsApp<br>6299891191</small></div>
-        </div>
-    </div>
-    <div class="nav-tabs">
-        <button class="nav-tab active" onclick="showTab('courses')">Courses</button>
-        <button class="nav-tab" id="adminTab" onclick="showTab('admin')" style="display:none">Admin</button>
-    </div>
-    <div id="courses" class="tab-content active">
-        <div class="card-wrap" id="coursesContainer"></div>
-    </div>
-    <div id="admin" class="tab-content admin-panel">
         <div class="admin-section">
-            <h3>Manage Content</h3>
-            <div class="form-group">
-                <label>Select Course and Chapter to manage</label>
-                <select id="adminCourse" onchange="loadChaptersForAdmin()">
-                    <option value="">Select Course</option>
-                    <option value="11en">Class 11th English</option>
-                    <option value="12en">Class 12th English</option>
-                    <option value="11hi">Class 11th Hindi</option>
-                    <option value="12hi">Class 12th Hindi</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <select id="adminChapter" onchange="loadUploadedContent()">
-                    <option value="">Select Chapter</option>
-                </select>
-            </div>
-            <div class="file-upload" style="margin-top:15px">
-                <h4>Upload Explanation PDF</h4>
-                <input type="file" id="explanationPdf" accept=".pdf">
-                <button class="btn-primary" onclick="uploadContent('explanation')">Upload Explanation</button>
-            </div>
-            <div class="file-upload">
-                <h4>Upload Q&A PDF</h4>
-                <input type="file" id="qaPdf" accept=".pdf">
-                <button class="btn-primary" onclick="uploadContent('qa')">Upload Q&A</button>
-            </div>
-            <div id="uploadedContentContainer" style="margin-top: 20px;">
-                </div>
+          <h3>Manage Uploaded Content</h3><select id="manageContentCourse" onchange="loadUploadedContent()">
+            <option value="">Select Course to View Content</option>
+            <option value="11en">Class 11th English</option>
+            <option value="12en">Class 12th English</option>
+            <option value="11hi">Class 11th Hindi</option>
+            <option value="12hi">Class 12th Hindi</option>
+          </select>
+          <div id="uploadedContentList" class="content-list"></div>
         </div>
         <div class="admin-section">
-            <h3>Student Management</h3>
-            <div id="studentList"></div>
+          <h3>Quiz Builder</h3>
+          <div class="quiz-builder"><input type="text" id="quizQuestion" placeholder="Enter question" style="width:100%;margin-bottom:10px;padding:8px;border:1px solid #ddd;border-radius:4px">
+            <div class="quiz-options"><input type="text" class="option-input" placeholder="Option A" style="width:100%;margin-bottom:5px;padding:6px;border:1px solid #ddd;border-radius:4px"><input type="text" class="option-input" placeholder="Option B" style="width:100%;margin-bottom:5px;padding:6px;border:1px solid #ddd;border-radius:4px"><input type="text" class="option-input" placeholder="Option C" style="width:100%;margin-bottom:5px;padding:6px;border:1px solid #ddd;border-radius:4px"><input type="text" class="option-input" placeholder="Option D" style="width:100%;margin-bottom:5px;padding:6px;border:1px solid #ddd;border-radius:4px"></div><select id="correctAnswer" style="width:100%;margin-bottom:10px;padding:6px">
+              <option value="">Select Correct Answer</option>
+              <option value="0">Option A</option>
+              <option value="1">Option B</option>
+              <option value="2">Option C</option>
+              <option value="3">Option D</option>
+            </select><button class="btn-primary" onclick="addQuizQuestion()">Add Question</button>
+          </div>
+          <div id="quizPreview" style="margin-top:15px"></div><button class="btn-primary" onclick="saveQuiz()" style="margin-top:10px">Save Quiz</button>
         </div>
-    </div>
-    <div id="contentViewer" class="content-viewer">
+        <div class="admin-section">
+          <h3>Manage Quizzes</h3><select id="manageQuizCourse" onchange="loadUploadedQuizzes()">
+            <option value="">Select Course to View Quizzes</option>
+            <option value="11en">Class 11th English</option>
+            <option value="12en">Class 12th English</option>
+            <option value="11hi">Class 11th Hindi</option>
+            <option value="12hi">Class 12th Hindi</option>
+          </select>
+          <div id="uploadedQuizList" class="content-list"></div>
+        </div>
+        <div class="admin-section">
+          <h3>Student Management</h3><button class="btn-primary" onclick="loadStudentList()" style="margin-bottom:10px">Refresh Student List</button>
+          <div id="studentList"></div>
+        </div>
+      </div>
+      <div id="contentViewer" class="content-viewer">
         <div class="content-header">
-            <h3 id="contentTitle">Content</h3>
-            <button onclick="closeContentViewer()" style="background:none;border:none;color:white;font-size:18px;cursor:pointer">&times;</button>
+          <h3 id="contentTitle">Content</h3><button onclick="closeContentViewer()" style="background:0 0;border:none;color:#fff;font-size:18px;cursor:pointer">&times;</button>
+        </div>
+        <div class="content-body"><iframe id="pdfViewer" class="pdf-viewer" src=""></iframe></div>
+      </div>
+      <div id="quizContainer" class="quiz-container">
+        <div class="content-header">
+          <h3 id="quizTitle">Quiz</h3><button onclick="closeQuiz()" style="background:0 0;border:none;color:#fff;font-size:18px;cursor:pointer">&times;</button>
         </div>
         <div class="content-body">
-            <iframe id="pdfViewer" class="pdf-viewer" src=""></iframe>
+          <div id="quizContent"></div><button id="submitQuiz" class="btn-primary" onclick="submitQuiz()" style="display:none;margin-top:20px">Submit Quiz</button>
+          <div id="quizResult" class="quiz-score"></div>
         </div>
+      </div>
+      <div id="paymentModal" class="modal">
+        <div class="modal-content"><button class="close-modal" onclick="closePaymentModal()">&times;</button>
+          <div class="qr-payment">
+            <h3 id="paymentTitle">Payment</h3>
+            <div class="qr-code" id="qrCode">
+              <div style="text-align:center">
+                <div style="font-size:60px">📱</div>
+                <div>Scan to Pay</div>
+                <div style="font-weight:700;margin-top:10px" id="paymentAmount">₹99</div>
+              </div>
+            </div>
+            <div class="payment-info">
+              <p><strong>Pay to:</strong>Sajan Sir</p>
+              <p><strong>UPI ID:</strong>sajanclasses@paytm</p>
+              <p>After payment, send screenshot on WhatsApp:<strong>6299891191</strong></p><button class="btn-primary" onclick="confirmPayment()" style="margin-top:15px">I have paid</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script>
+      // ============================================
+      // FIREBASE CONFIGURATION
+      // ============================================
+      const firebaseConfig = {
+    apiKey: "AIzaSyAg5QTRkeiKYu7Iyb23S3aLAcNmdOFNLeA",
+    authDomain: "sajanonlineclasses.firebaseapp.com",
+    projectId: "sajanonlineclasses",
+    storageBucket: "sajanonlineclasses.firebasestorage.app",
+    messagingSenderId: "1018452326587",
+    appId: "1:1018452326587:web:7f498fac65cf2e2f0e519e"
+  };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+      // Global state
+      let currentUser = null;
+      let isAdmin = false;
+      let currentQuizData = [];
+      let currentQuizAnswers = {};
+      // Course data
+      const courses = [{
+        id: '11en',
+        name: 'Class 11th English',
+        price: '₹99',
+        summary: 'Complete chapter-wise course with all sections',
+        categories: [{
+          title: 'Prose',
+          chapters: ['Animals in Prison', 'Nalanda: Ancient Seat of Learning', 'A Snake in the Grass', 'The Rule of the Road', 'The Scientific Point of View', 'I Pass the Delhi Test', 'The Leader of Men', 'Mother India', 'National Unity, Nation and Nationalism', 'Dolly at the Dentist', 'The Three Vows', 'Exceptional Role of Newspapers in Development']
+        }, {
+          title: 'Poetry',
+          chapters: ['Where the Mind is without Fear', 'The Marriage of True Minds', 'The Chimney Sweeper', 'Stopping by Woods on a Snowy Evening', 'The Lamentation of the Old Pensioner', 'Three Years She Grew', 'Village Song', 'Follower', 'Voice of the Unwanted Girl', 'South Delhi Murder']
+        }, {
+          title: 'Story of English',
+          chapters: ['How English Began', 'English Down the Ages', 'Global English', 'Future of English', 'Story of English Poetry']
+        }, {
+          title: 'Grammar',
+          chapters: ['Parts of speech', 'Noun', 'Pronoun', 'Adjective', 'Verb', 'Adverb', 'Preposition', 'Conjunction', 'Interjection', 'Determiners', 'Question tags']
+        }, {
+          title: 'Writing',
+          chapters: ['Essay', 'Letter / Application', 'Translation', 'Comprehension (passage)', 'Precis writing']
+        }]
+      }, {
+        id: '12en',
+        name: 'Class 12th English',
+        price: '₹199',
+        summary: 'Board exam focused complete preparation',
+        categories: [{
+          title: 'Prose',
+          chapters: ['Indian Civilisation and Culture', 'Bharat is My Home', 'A Pinch of Snuff', 'I Have a Dream', 'Ideas that have Helped Mankind', 'The Artist', 'A Child Born', 'How Free is the Press', 'The Earth', 'India Through a Traveller\'s Eyes', 'A Marriage Proposal']
+        }, {
+          title: 'Poetry',
+          chapters: ['Sweetest Love I do not Goe', 'Song of Myself', 'Now the Leaves are Falling Fast', 'Ode to Autumn', 'An Epitaph', 'The Soldier', 'Macavity: The Mystery Cat', 'Fire-Hymn', 'Snake', 'My Grandmother\'s House']
+        }, {
+          title: 'Story of English',
+          chapters: ['Old English', 'Middle English', 'Modern English', 'English as a World Language', 'Story of English Drama', 'Story of the Novel in English']
+        }, {
+          title: 'Grammar',
+          chapters: ['Voice', 'Time and Tense', 'Modal verb', 'Combination', 'Transformation', 'Preposition', 'Correction of sentences', 'Article', 'Spelling test', 'Subject - verb agreement', 'Narration', 'Phrases', 'Antonyms', 'Synonyms', 'Miscellaneous']
+        }, {
+          title: 'Writing',
+          chapters: ['Essay', 'Letter / Application', 'Translation', 'Comprehension (passage)', 'Precis writing']
+        }]
+      }, {
+        id: '11hi',
+        name: 'Class 11th Hindi',
+        price: '₹99',
+        summary: 'संपूर्ण हिंदी पाठ्यक्रम परीक्षा तैयारी',
+        categories: [{
+          title: 'गद्य - खंड',
+          chapters: ['पूस की रात', 'कविता की परख', 'आँखों देखा गदर', 'बेजोड़ गायिका : लता मंगेशकर', 'चलचित्र', 'मेरी वियतनाम यात्रा', 'सिक्का बदल गया', 'उत्तरी स्वप्न परी : हरी क्रांति', 'एक दीक्षांत भाषण', 'सूर्य', 'भोगे हुए दिन', 'गाँव के बच्चों की शिक्षा']
+        }, {
+          title: 'पद्य - खंड',
+          chapters: ['विद्यापति के पद', 'कबीर के पद', 'मीराबाई के पद', 'सहजोबाई के पद', 'भारत-दुर्दशा', 'एंकार', 'तोड़ती पत्थर', 'बहुत दिनों के बाद', 'गालिब', 'जगरनाथ', 'पृथ्वी', 'मातृभूमि']
+        }, {
+          title: 'व्याकरण',
+          chapters: ['संज्ञा', 'सर्वनाम', 'विशेषण', 'क्रिया', 'क्रिया विशेषण', 'समुच्चयबोधक (संयोजक)', 'विस्मयादिबोधक', 'अव्यय (निपात)']
+        }, {
+          title: 'लेखन',
+          chapters: ['निबंध', 'आवेदन एवं पत्र लेखन', 'संक्षेपण']
+        }]
+      }, {
+        id: '12hi',
+        name: 'Class 12th Hindi',
+        price: '₹199',
+        summary: 'उन्नत स्तर का परीक्षा तथा साहित्यिक तैयारी',
+        categories: [{
+          title: 'गद्य खण्ड',
+          chapters: ['बातचीत', 'उसने कहा था', 'संपूर्ण क्रांति', 'अर्द्धनारीश्वर', 'रोज', 'एक लेख और एक पत्र', 'ओ सदानीरा', 'सिपाही की माँ', 'प्रगीत और समाज', 'जूठन', 'हँसते हुए मेरा अकेलापन', 'तिरिछ', 'शिक्षा']
+        }, {
+          title: 'काव्य खण्ड',
+          chapters: ['कड़बक', 'सूरदास के पद', 'तुलसीदास के पद', 'छप्पय', 'कवित्त', 'तुमुल कोलाहल कलह में', 'पुत्र वियोग', 'उषा', 'जन-जन का चेहरा एक', 'अधिनायक', 'प्यारे नन्हें बेटे को', 'हार-जीत', 'गाँव का घर']
+        }, {
+          title: 'व्याकरण',
+          chapters: ['उच्चारण स्थान', 'संज्ञा', 'सर्वनाम', 'विशेषण', 'मुहावरे', 'विलोम शब्द', 'पर्यायवाची शब्द', 'अनेक शब्दों के लिए एक शब्द', 'समास', 'लिंग निर्णय', 'संधि विच्छेद', 'उपसर्ग', 'प्रत्यय', 'शब्द शुद्धिकरण', 'वाक्य शुद्धिकरण', 'कारक', 'वचन', 'काल', 'शब्द', 'पदबंध']
+        }, {
+          title: 'लेखन',
+          chapters: ['निबंध', 'आवेदन एवं पत्र लेखन', 'संक्षेपण']
+        }]
+      }, {
+        id: 'complete',
+        name: 'Complete Package',
+        price: '₹499',
+        summary: 'All 4 courses together with maximum discount',
+        categories: []
+      }];
+      // ============================================
+      // UTILITY FUNCTIONS
+      // ============================================
+      function showLoading() {
+        document.getElementById('loadingSpinner').style.display = 'flex';
+      }
 
-<div id="quizModal" class="modal">
-    <div class="modal-content">
-        <h3 id="quizTitle">Chapter Quiz</h3>
-        <div id="quizContent">
-            <p id="quizQuestion" style="margin-bottom: 15px; font-size: 16px;"></p>
-            <div id="quizOptions"></div>
-        </div>
-        <div id="quizResult" style="display:none;">
-            <h4>Quiz Complete!</h4>
-            <p>Your Score: <span id="quizScore"></span></p>
-            <button class="btn-primary" onclick="closeQuiz()">Close</button>
-        </div>
-    </div>
-</div>
+      function hideLoading() {
+        document.getElementById('loadingSpinner').style.display = 'none';
+      }
 
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-<script>
-// Firebase Config (your details)
-const firebaseConfig = {
-  apiKey: "AIzaSyDMvN_U9CXLJiWpHfG-YDBLQTsH4bXffwc",
-  authDomain: "sajan-online-classes.firebaseapp.com",
-  projectId: "sajan-online-classes",
-  storageBucket: "sajan-online-classes.firebasestorage.app",
-  messagingSenderId: "590917508121",
-  appId: "1:590917508121:web:cc9e0e581a311470031e88",
-  measurementId: "G-KNDDJNDL8W"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-  function login() {
-    const email = document.getElementById("sharmasaja1191@gmail.com").value;
-    const password = document.getElementById("Sajan@301").value;
-
-    auth.signInWithEmailAndPassword(sharmasaja1191@gmail.com, Sajan@301)
-      .then((userCredential) => {
-        alert("Welcome back " + userCredential.user.email);
-      })
-      .catch((error) => {
-        alert("Login failed: " + error.message);
-      });
-  }
-// Course data remains unchanged
-const courses=[{id:'11en',name:'Class 11th English',price:'₹99',summary:'Complete chapter-wise course with all sections',categories:[{title:'Prose',chapters:['Animals in Prison','Nalanda: Ancient Seat of Learning','A Snake in the Grass','The Rule of the Road','The Scientific Point of View','I Pass the Delhi Test','The Leader of Men','Mother India','National Unity, Nation and Nationalism','Dolly at the Dentist','The Three Vows','Exceptional Role of Newspapers in Development']},{title:'Poetry',chapters:['Where the Mind is without Fear','The Marriage of True Minds','The Chimney Sweeper','Stopping by Woods on a Snowy Evening','The Lamentation of the Old Pensioner','Three Years She Grew','Village Song','Follower','Voice of the Unwanted Girl','South Delhi Murder']},{title:'Story of English',chapters:['How English Began','English Down the Ages','Global English','Future of English','Story of English Poetry']},{title:'Grammar',chapters:['Parts of speech','Noun','Pronoun','Adjective','Verb','Adverb','Preposition','Conjunction','Interjection','Determiners','Question tags']},{title:'Writing',chapters:['Essay','Letter / Application','Translation','Comprehension (passage)','Precis writing']}]},{id:'12en',name:'Class 12th English',price:'₹199',summary:'Board exam focused complete preparation',categories:[{title:'Prose',chapters:['Indian Civilisation and Culture','Bharat is My Home','A Pinch of Snuff','I Have a Dream','Ideas that have Helped Mankind','The Artist','A Child Born','How Free is the Press','The Earth','India Through a Traveller\'s Eyes','A Marriage Proposal']},{title:'Poetry',chapters:['Sweetest Love I do not Goe','Song of Myself','Now the Leaves are Falling Fast','Ode to Autumn','An Epitaph','The Soldier','Macavity: The Mystery Cat','Fire-Hymn','Snake','My Grandmother\'s House']},{title:'Story of English',chapters:['Old English','Middle English','Modern English','English as a World Language','Story of English Drama','Story of the Novel in English']},{title:'Grammar',chapters:['Voice','Time and Tense','Modal verb','Combination','Transformation','Preposition','Correction of sentences','Article','Spelling test','Subject - verb agreement','Narration','Phrases','Antonyms','Synonyms','Miscellaneous']},{title:'Writing',chapters:['Essay','Letter / Application','Translation','Comprehension (passage)','Precis writing']}]},{id:'11hi',name:'Class 11th Hindi',price:'₹99',summary:'  संपूर्ण हिंदी     पाठ्यक्रम      परीक्षा     तैयारी  ',categories:[{title:'  गद्य   -   खंड  ',chapters:['  पूस     की     रात  ','  कविता     की     परख  ','  आँखों     देखा     गदर  ','  बेजोड़     गायिका   :   लता     मंगेशकर  ','  चलचित्र  ','  मेरी     वियतनाम     यात्रा  ','  सिक्का     बदल     गया  ','  उत्तरी     स्वप् ن     परी   :   हरी     क्रांति  ','  एक     दीक्षांत     भाषण  ','  सूर्य  ','  भोगे     हुए     दिन  ','  गाँव      के     बच्चों     की     शिक्षा  ']},{title:'  पद्य   -   खंड  ',chapters:['  विद्यापति     के     पद  ','  कबीर     के     पद  ','  मीराबाई     के     पद  ','  सहजोबाई     के     पद  ','  भारत  -  दुर्दशा  ','  झंकार  ','  तोड़ती     पत्थर  ','  बहुत     दिनों     के     बाद  ','  गालिब  ','  जगरनाथ  ','  पृथ्वी  ','  मातृभूमि  ']},{title:'  व्याकरण  ',chapters:['  संज्ञा  ','  सर्वनाम  ','  विशेषण  ','  क्रिया  ','  क्रिया     विशेषण  ','  समुच्चयबोधक   (  संयोजक  )','  विस्मयादिबोधक  ','  अव्यय   (  निपात  )']},{title:'  लेखन  ',chapters:['  निबंध  ','  आवेदन     एवं     पत्र     लेखन  ','  संक्षेपण  ']}]},{id:'12hi',name:'Class 12th Hindi',price:'₹199',summary:'  उन्नत     स्तर     का     परीक्षा     तथा     साहित्यिक     तैयारी  ',categories:[{title:'  गद्य     खण्ड  ',chapters:['  बातचीत  ','  उसने     कहा     था  ','  संपूर्ण     क्रांति  ','  अर्द्धनारीश्वर  ','  रोज  ','  एक     लेख     और     एक     पत्र  ','  ओ     सदानीरा  ','  सिपाही     की     माँ  ','  प्रगीत     और     समाज  ','  जूठन  ','  हँसते     हुए     मेरा     अकेलापन  ','  तिरिछ  ','  शिक्षा  ']},{title:'  काव्य     खण्ड  ',chapters:['  कड़बक  ','  सूरदास     के     पद  ','  तुलसीदास     के     पद  ','  छप्पय  ','  कवित्त  ','  तुमुल     कोलाहल     कलह     में  ','  पुत्र     वियोग  ','  उषा  ','  जन  -  जन     का     चेहरा     एक  ','  अधिनायक  ','  प्यारे     नन्हें     बेटे     को  ','  हार  -  जीत  ','  गाँव     का     घर  ']},{title:'  व्याकरण  ',chapters:['  उच्चारण     स्थान  ','  संज्ञा  ','  सर्वनाम  ','  विशेषण  ','  मुहावरे  ','  विलोम     शब्द  ','  पर्यायवाची     शब्द  ','  अनेक     शब्दों     के     लिए     एक     शब्द  ','  समास  ','  लिंग     निर्णय  ','  संधि     विच्छेद  ','  उपसर्ग  ','  प्रत्यय  ','  शब्द     शुद्धिकरण  ','  वाक्य     शुद्धिकरण  ','  कारक  ','  वचन  ','  काल  ','  शब्द  ','  पदबंध  ']},{title:'  लेखन  ',chapters:['  निबंध  ','  आवेदन     एवं     पत्र     लेखन  ','  संक्षेपण  ']}]},{id:'complete',name:'Complete Package',price:'₹499',summary:'All 4 courses together with maximum discount',categories:[]}];
-// --- AUTH & STATE MANAGEMENT (Mostly Unchanged) ---
-document.addEventListener('DOMContentLoaded', () => {
-    auth.onAuthStateChanged(user => {
+      function showMessage(message, isError = false) {
+        alert(message);
+      }
+      // ============================================
+      // AUTH STATE OBSERVER
+      // ============================================
+      auth.onAuthStateChanged(async (user) => {
         if (user) {
-            db.collection("users").doc(user.uid).get().then(doc => {
-                if (doc.exists) {
-                    currentUser = { ...doc.data(), uid: user.uid };
-                    isAdmin = currentUser.role === 'admin';
-                } else {
-                    currentUser = { email: user.email, uid: user.uid, name: user.email.split('@')[0], purchasedCourses: [] };
-                }
-                updateAuthState();
-            });
+          showLoading();
+          try {
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists) {
+              const userData = userDoc.data();
+              currentUser = {
+                uid: user.uid,
+                email: user.email,
+                ...userData
+              };
+              isAdmin = userData.isAdmin || false;
+              updateAuthState();
+              renderCourses();
+              if (isAdmin) {
+                loadStudentList();
+              }
+            }
+          } catch (error) {
+            console.error('Error loading user data:', error);
+          } finally {
+            hideLoading();
+          }
         } else {
-            currentUser = null;
-            isAdmin = false;
-            updateAuthState();
+          currentUser = null;
+          isAdmin = false;
+          updateAuthState();
+          renderCourses();
+          hideLoading();
         }
-    });
-    renderCourses();
-});
-// Signup, Login, Logout, AdminLogin functions are the same as before
-function signup(){const name=document.getElementById('signupName').value,email=document.getElementById('signupEmail').value,phone=document.getElementById('signupPhone').value,studentClass=document.getElementById('signupClass').value,password=document.getElementById('signupPassword').value;if(!name||!email||!studentClass||!password)return void alert("Please fill all required fields");auth.createUserWithEmailAndPassword(email,password).then(userCredential=>{const user=userCredential.user;return db.collection("users").doc(user.uid).set({name:name,email:email,phone:phone,class:studentClass,purchasedCourses:[],createdAt:(new Date).toISOString()})}).then(()=>{alert("Registration successful! Welcome "+name+"!"),closeModal()}).catch(error=>{alert("Error: "+error.message)})}
-function login(){const email=document.getElementById('loginEmail').value,password=document.getElementById('loginPassword').value;if(email&&password)auth.signInWithEmailAndPassword(email,password).then(userCredential=>{alert("Welcome back!"),closeModal()}).catch(error=>{alert("Error: "+error.message)});else alert("Please fill all fields")}
-function logout(){auth.signOut().then(()=>{alert("You have been logged out."),showTab("courses")})}
-function adminLogin(){const email=document.getElementById('adminEmail').value,password=document.getElementById('adminPassword').value;auth.signInWithEmailAndPassword(email,password).then(userCredential=>{const user=userCredential.user;return db.collection("users").doc(user.uid).get()}).then(doc=>{doc.exists&&"admin"===doc.data().role?(alert("Admin login successful!"),closeModal()):(auth.signOut(),alert("You are not authorized as an admin."))}).catch(error=>{alert("Admin Login Error: "+error.message)})}
-function updateAuthState(){const authButton=document.getElementById('authButton'),adminTab=document.getElementById('adminTab');currentUser?(authButton.textContent=isAdmin?" 👨 ‍ 💼  Admin":" 👋  "+currentUser.name.split(" ")[0],authButton.onclick=logout,isAdmin?(adminTab.style.display="block",loadStudentList()):adminTab.style.display="none"):(authButton.textContent=" 🔑  Login",authButton.onclick=showAuthModal,adminTab.style.display="none"),renderCourses()}
-// Other helper functions (showModal, closeModal, showTab etc.) are unchanged
-function showAuthModal(){document.getElementById('authModal').style.display='flex';showLogin()}
-function closeModal(){document.getElementById('authModal').style.display='none'}
-function showLogin(){document.getElementById('loginForm').style.display='block';document.getElementById('signupForm').style.display='none';document.getElementById('adminLoginForm').style.display='none'}
-function showSignup(){document.getElementById('loginForm').style.display='none';document.getElementById('signupForm').style.display='block';document.getElementById('adminLoginForm').style.display='none'}
-function showAdminLogin(){document.getElementById('loginForm').style.display='none';document.getElementById('signupForm').style.display='none';document.getElementById('adminLoginForm').style.display='block'}
-function showTab(tabName){document.querySelectorAll('.nav-tab').forEach(tab=>tab.classList.remove('active'));document.querySelectorAll('.tab-content').forEach(content=>content.classList.remove('active'));document.querySelector(`[onclick="showTab('${tabName}')"]`).classList.add('active');document.getElementById(tabName).classList.add('active')}
-function renderCourses(){const container=document.getElementById('coursesContainer');container.innerHTML='';courses.forEach(course=>{const card=document.createElement('div');card.className='course-card';const isEnrolled=currentUser&&currentUser.purchasedCourses&&currentUser.purchasedCourses.includes(course.id);let totalChapters=0,totalSections=0;course.id==='complete'?['11en','12en','11hi','12hi'].forEach(cId=>{let c=courses.find(x=>x.id===cId);totalSections+=c.categories.length,c.categories.forEach(cat=>{totalChapters+=cat.chapters.length})}):(totalSections=course.categories.length,course.categories.forEach(cat=>{totalChapters+=cat.chapters.length})),card.innerHTML=`<div class="head"><div><h2>${course.name}</h2><div class="summary">${course.summary}</div><div style="margin-top: 8px; font-size: 12px; color: #666;">  📚   ${totalChapters} Total Chapters |   🎯   ${totalSections} Sections</div></div><div class="chip">${course.price}</div></div><div class="cat-list"></div>`;const catList=card.querySelector('.cat-list');course.id==='complete'?['11en','12en','11hi','12hi'].forEach(cId=>{let c=courses.find(x=>x.id===cId);const catContainer=document.createElement('div');catContainer.className='cat';const safeId='complete_'+cId;catContainer.innerHTML=`<div class="category-title" data-target="${safeId}"><strong>${c.name}</strong></div><div class="chapters" id="${safeId}"></div>`;const chaptersDiv=catContainer.querySelector('.chapters');c.categories.forEach((cat,ci)=>{const secDiv=document.createElement('div');secDiv.className='cat';const secId=safeId+'_sec_'+ci;secDiv.innerHTML=`<div class="category-title" data-target="${secId}"><strong>${cat.title}</strong> <small>${cat.chapters.length} lessons   ▾  </small></div><div class="chapters" id="${secId}"></div>`;const secChDiv=secDiv.querySelector('.chapters');cat.chapters.forEach(ch=>{const chDiv=document.createElement('div');chDiv.className='chapter-item';const btnDisabled=isEnrolled?"":'disabled',explainBtn=`<button class="btn explain" ${btnDisabled} onclick="openContent('${cId}', '${cat.title}', '${ch}', 'explanation')">Explanation</button>`,qaBtn=`<button class="btn qa" ${btnDisabled} onclick="openContent('${cId}', '${cat.title}', '${ch}', 'qa')">Q&A</button>`,quizBtn=cat.title.toLowerCase().includes('writing')||cat.title.includes('  लेखन  ')?'':`<button class="btn quiz" ${btnDisabled} onclick="openQuiz('${cId}', '${cat.title}', '${ch}')">Quiz</button>`;chDiv.innerHTML=`<div class="chapter-title">${ch}</div><div class="chapter-actions">${explainBtn}${qaBtn}${quizBtn}</div>`,secChDiv.appendChild(chDiv)}),chaptersDiv.appendChild(secDiv)}),catList.appendChild(catContainer)}):course.categories.forEach((cat,ci)=>{const c=document.createElement('div');c.className='cat';const safeId=course.id+'_cat_'+ci;c.innerHTML=`<div class="category-title" data-target="${safeId}"><strong>${cat.title}</strong><small>${cat.chapters.length} lessons   ▾  </small></div><div class="chapters" id="${safeId}"></div>`;const chaptersDiv=c.querySelector('.chapters');cat.chapters.forEach(ch=>{const chDiv=document.createElement('div');chDiv.className='chapter-item';const btnDisabled=isEnrolled?"":'disabled',explainBtn=`<button class="btn explain" ${btnDisabled} onclick="openContent('${course.id}', '${cat.title}', '${ch}', 'explanation')">Explanation</button>`,qaBtn=`<button class="btn qa" ${btnDisabled} onclick="openContent('${course.id}', '${cat.title}', '${ch}', 'qa')">Q&A</button>`,quizBtn=cat.title.toLowerCase().includes('writing')||cat.title.includes('  लेखन  ')?'':`<button class="btn quiz" ${btnDisabled} onclick="openQuiz('${course.id}', '${cat.title}', '${ch}')">Quiz</button>`;chDiv.innerHTML=`<div class="chapter-title">${ch}</div><div class="chapter-actions">${explainBtn}${qaBtn}${quizBtn}</div>`,chaptersDiv.appendChild(chDiv)}),catList.appendChild(c)});const actionDiv=document.createElement('div');isEnrolled?actionDiv.innerHTML='<div class="price-row"><div style="color: #28a745; font-weight: bold; display: flex; align-items: center; gap: 5px;">✓ <span>Enrolled & Active</span></div><button class="enroll" style="background: #28a745;" disabled>Access Content</button></div>':(actionDiv.innerHTML=`<div class="price-row"><div class="price">${course.price} <small style="text-decoration:line-through;color:#aaa;font-weight:500;margin-left:8px;">${'11en'===course.id||'11hi'===course.id?"₹199":'12en'===course.id||'12hi'===course.id?"₹299":"₹899"}</small><div style="font-size: 11px; color: #28a745; margin-top: 2px;">  💰   Save ${parseInt(('11en'===course.id||'11hi'===course.id?"₹199":'12en'===course.id||'12hi'===course.id?"₹299":"₹899").replace('₹',''))-parseInt(course.price.replace('₹',''))}/-</div></div><button class="enroll" onclick="initiatePayment('${course.id}', '${course.name}', '${course.price}')">  🛒   Enroll Now</button></div>`),card.appendChild(actionDiv),container.appendChild(card)})};
-// ==========================================================
-// ============== NEW & UPDATED ADMIN FUNCTIONS =============
-// ==========================================================
-function loadChaptersForAdmin() { const courseId = document.getElementById('adminCourse').value; const chapterSelect = document.getElementById('adminChapter'); chapterSelect.innerHTML = '<option value="">Select Chapter</option>'; document.getElementById('uploadedContentContainer').innerHTML = ''; if (courseId) { const course = courses.find(c => c.id === courseId); if (course) { course.categories.forEach(cat => { cat.chapters.forEach(ch => { const option = document.createElement('option'); option.value = `${cat.title}|${ch}`; option.textContent = `${cat.title} - ${ch}`; chapterSelect.appendChild(option); }); }); } } }
-function uploadContent(type) { const courseId = document.getElementById('adminCourse').value; const chapterValue = document.getElementById('adminChapter').value; const fileInput = document.getElementById(type === 'explanation' ? 'explanationPdf' : 'qaPdf'); const file = fileInput.files[0]; if (!courseId || !chapterValue) { return alert('Please select a course and chapter first.'); } if (!file) { return alert('Please select a file to upload.'); } const [category, chapter] = chapterValue.split('|'); const storagePath = `content/${courseId}/${category}/${chapter}/${type}.pdf`; const contentRef = storage.ref(storagePath); const uploadTask = contentRef.put(file); alert(`Uploading ${type} PDF... Please wait.`); uploadTask.on('state_changed', (snapshot) => { /* Can be used to show progress */ }, (error) => { alert('Upload failed: ' + error.message); }, () => { uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => { const docId = `${courseId}_${category}_${chapter}`; const contentData = { [`${type}_url`]: downloadURL, [`${type}_path`]: storagePath }; db.collection("content").doc(docId).set(contentData, { merge: true }).then(() => { alert(`${type.charAt(0).toUpperCase() + type.slice(1)} PDF uploaded successfully!`); fileInput.value = ''; loadUploadedContent(); }).catch(error => alert("Error saving to database: " + error.message)); }); } ); }
-async function loadUploadedContent() { const courseId = document.getElementById('adminCourse').value; const chapterValue = document.getElementById('adminChapter').value; const container = document.getElementById('uploadedContentContainer'); container.innerHTML = '<h4>Uploaded Files:</h4>'; if (!courseId || !chapterValue) { container.innerHTML += '<p>Select a chapter to see uploaded files.</p>'; return; } const [category, chapter] = chapterValue.split('|'); const docId = `${courseId}_${category}_${chapter}`; try { const doc = await db.collection("content").doc(docId).get(); if (!doc.exists) { container.innerHTML += '<p>No files uploaded for this chapter yet.</p>'; return; } const data = doc.data(); let filesFound = false; if (data.explanation_url) { filesFound = true; container.innerHTML += ` <div class="uploaded-file-item"> <span>Explanation.pdf</span> <button class="btn btn-danger" onclick="deleteContent('explanation')">Delete</button> </div> `; } if (data.qa_url) { filesFound = true; container.innerHTML += ` <div class="uploaded-file-item"> <span>Q&A.pdf</span> <button class="btn btn-danger" onclick="deleteContent('qa')">Delete</button> </div> `; } if (!filesFound) { container.innerHTML += '<p>No files uploaded for this chapter yet.</p>'; } } catch (error) { console.error("Error loading content:", error); container.innerHTML += '<p>Could not load files. See console for error.</p>'; } }
-async function deleteContent(type) { if (!confirm(`Are you sure you want to delete the ${type} PDF? This action cannot be undone.`)) { return; } const courseId = document.getElementById('adminCourse').value; const chapterValue = document.getElementById('adminChapter').value; if (!courseId || !chapterValue) return alert('Error: Course/Chapter not selected.'); const [category, chapter] = chapterValue.split('|'); const docId = `${courseId}_${category}_${chapter}`; const docRef = db.collection("content").doc(docId); try { const doc = await docRef.get(); if (!doc.exists) return alert('Error: No record found in database.'); const data = doc.data(); const storagePath = data[`${type}_path`]; if (!storagePath) return alert('Error: File path not found in database.'); await storage.ref(storagePath).delete(); await docRef.update({ [`${type}_url`]: firebase.firestore.FieldValue.delete(), [`${type}_path`]: firebase.firestore.FieldValue.delete() }); alert(`${type.charAt(0).toUpperCase() + type.slice(1)} PDF deleted successfully.`); loadUploadedContent(); } catch (error) { alert('Deletion failed: ' + error.message); console.error("Deletion error:", error); } }
-// --- STUDENT-FACING FUNCTIONS (UPDATED) ---
-async function openContent(courseId, category, chapter, type) { if (!currentUser || !currentUser.purchasedCourses.includes(courseId)) { return alert('Please enroll in this course to view the content.'); } const docId = `${courseId}_${category}_${chapter}`; try { const doc = await db.collection("content").doc(docId).get(); if (doc.exists && doc.data()[`${type}_url`]) { const url = doc.data()[`${type}_url`]; document.getElementById('contentTitle').textContent = `${chapter} - ${type}`; document.getElementById('pdfViewer').src = url; document.getElementById('contentViewer').style.display = 'block'; } else { alert('Content not uploaded yet. Please contact Sajan Sir.'); } } catch (error) { alert('Could not load content. Please try again later.'); console.error("Error fetching content URL:", error); } }
-function closeContentViewer() { document.getElementById('contentViewer').style.display = 'none'; document.getElementById('pdfViewer').src = ''; }
-function loadStudentList(){if(!isAdmin)return;const studentList=document.getElementById("studentList");studentList&&(studentList.innerHTML="<h4>Registered Students:</h4>",db.collection("users").get().then(querySnapshot=>{if(querySnapshot.empty)return void(studentList.innerHTML+="<p>No students registered yet</p>");querySnapshot.forEach(doc=>{const user=doc.data(),studentDiv=document.createElement("div");studentDiv.style.cssText="background: white; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd;";const purchasedCourses=user.purchasedCourses||[],courseNames=purchasedCourses.map(id=>(courses.find(c=>c.id===id)||{}).name||id).join(", ");studentDiv.innerHTML=`<strong>${user.name}</strong><br><small> 📞  Phone: ${user.phone||"N/A"} |  🎓  Class: ${user.class}</small><br><small> 📚  Courses: ${courseNames||"None purchased"}</small><br><small> 📅  Registered: ${new Date(user.createdAt).toLocaleDateString()}</small>`,studentList.appendChild(studentDiv)})}))}
+      });
+      // ============================================
+      // AUTHENTICATION FUNCTIONS
+      // ============================================
+      function showAuthModal() {
+        document.getElementById('authModal').style.display = 'flex';
+        showLogin();
+      }
 
-// ==========================================================
-// ============= नया पेमेंट और क्विज़ कोड यहाँ है ===============
-// ==========================================================
+      function closeModal() {
+        document.getElementById('authModal').style.display = 'none';
+      }
 
-// --- नया RAZORPAY पेमेंट फंक्शन ---
-function initiatePayment(courseId, courseName, price) {
-    if (!currentUser) {
-        alert('Please login first to enroll.');
-        showAuthModal();
-        return;
-    }
-    const amountInPaise = parseInt(price.replace('₹', '')) * 100;
-    const options = {
-        "key": "YOUR_RAZORPAY_KEY_ID", // <<<--- अपनी RAZORPAY KEY ID यहाँ डालें --->>>
-        "amount": amountInPaise,
-        "currency": "INR",
-        "name": "Sajan English Classes",
-        "description": "Payment for " + courseName,
-        "handler": function (response){
-            alert(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
-            const userRef = db.collection("users").doc(currentUser.uid);
-            userRef.update({
-                purchasedCourses: firebase.firestore.FieldValue.arrayUnion(courseId)
-            }).then(() => {
-                if (!currentUser.purchasedCourses) {
-                    currentUser.purchasedCourses = [];
-                }
-                currentUser.purchasedCourses.push(courseId);
-                renderCourses();
-                alert("Course unlocked! You can now access all materials.");
-            }).catch(error => {
-                console.error("Error updating document: ", error);
-                alert("Payment was successful, but there was an error unlocking the course. Please contact support.");
+      function showLogin() {
+        document.getElementById('loginForm').style.display = 'block';
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('adminLoginForm').style.display = 'none';
+      }
+
+      function showSignup() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('signupForm').style.display = 'block';
+        document.getElementById('adminLoginForm').style.display = 'none';
+      }
+
+      function showAdminLogin() {
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('adminLoginForm').style.display = 'block';
+      }
+      async function signup() {
+        const name = document.getElementById('signupName').value.trim();
+        const phone = document.getElementById('signupPhone').value.trim();
+        const studentClass = document.getElementById('signupClass').value;
+        const password = document.getElementById('signupPassword').value;
+        if (!name || !phone || !studentClass || !password) {
+          showMessage('Please fill all fields', true);
+          return;
+        }
+        if (password.length < 6) {
+          showMessage('Password must be at least 6 characters', true);
+          return;
+        }
+        if (phone.length !== 10 || isNaN(phone)) {
+          showMessage('Please enter a valid 10-digit phone number', true);
+          return;
+        }
+        showLoading();
+        try {
+          // Create auth user with phone as email
+          const email = phone + '@sajanclasses.com';
+          const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+          // Save user data to Firestore
+          await db.collection('users').doc(userCredential.user.uid).set({
+            name: name,
+            phone: phone,
+            class: studentClass,
+            email: email,
+            purchasedCourses: [],
+            isAdmin: false,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          closeModal();
+          showMessage('Registration successful! Welcome ' + name + '!');
+        } catch (error) {
+          console.error('Signup error:', error);
+          if (error.code === 'auth/email-already-in-use') {
+            showMessage('This phone number is already registered', true);
+          } else {
+            showMessage('Registration failed: ' + error.message, true);
+          }
+        } finally {
+          hideLoading();
+        }
+      }
+      async function login() {
+        const phone = document.getElementById('loginPhone').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        if (!phone || !password) {
+          showMessage('Please fill all fields', true);
+          return;
+        }
+        showLoading();
+        try {
+          const email = phone + '@sajanclasses.com';
+          await auth.signInWithEmailAndPassword(email, password);
+          closeModal();
+        } catch (error) {
+          console.error('Login error:', error);
+          if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+            showMessage('Invalid phone number or password', true);
+          } else {
+            showMessage('Login failed: ' + error.message, true);
+          }
+          hideLoading();
+        }
+      }
+      async function adminLogin() {
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPassword').value;
+        if (!email || !password) {
+          showMessage('Please fill all fields', true);
+          return;
+        }
+        showLoading();
+        try {
+          const userCredential = await auth.signInWithEmailAndPassword(email, password);
+          // Check if user is admin
+          const userDoc = await db.collection('users').doc(userCredential.user.uid).get();
+          if (userDoc.exists && userDoc.data().isAdmin === true) {
+            closeModal();
+            showMessage('Admin login successful!');
+          } else {
+            await auth.signOut();
+            showMessage('You do not have admin privileges', true);
+          }
+        } catch (error) {
+          console.error('Admin login error:', error);
+          showMessage('Admin login failed: ' + error.message, true);
+        } finally {
+          hideLoading();
+        }
+      }
+
+      function logout() {
+        if (confirm('Are you sure you want to logout?')) {
+          auth.signOut();
+          showTab('courses');
+        }
+      }
+
+      function updateAuthState() {
+        const authButton = document.getElementById('authButton');
+        const adminTab = document.getElementById('adminTab');
+        if (currentUser) {
+          authButton.textContent = isAdmin ? '👨‍💼 Admin' : '👋 ' + currentUser.name.split(' ')[0];
+          authButton.onclick = logout;
+          if (isAdmin) {
+            adminTab.style.display = 'block';
+          }
+        } else {
+          authButton.textContent = '🔐 Login';
+          authButton.onclick = showAuthModal;
+          adminTab.style.display = 'none';
+        }
+      }
+      // ============================================
+      // TAB NAVIGATION
+      // ============================================
+      function showTab(tabName) {
+        document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        document.querySelector("[onclick=\"showTab('" + tabName + "')\"]").classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+      }
+      // ============================================
+      // COURSE RENDERING
+      // ============================================
+      function renderCourses() {
+        const container = document.getElementById('coursesContainer');
+        container.innerHTML = '';
+        courses.forEach(course => {
+          const card = document.createElement('div');
+          card.className = 'course-card';
+          const isEnrolled = currentUser && currentUser.purchasedCourses && currentUser.purchasedCourses.includes(course.id);
+          let totalChapters = 0;
+          let totalSections = 0;
+          if (course.id === 'complete') {
+            ['11en', '12en', '11hi', '12hi'].forEach(cId => {
+              let c = courses.find(x => x.id === cId);
+              totalSections += c.categories.length;
+              c.categories.forEach(cat => {
+                totalChapters += cat.chapters.length;
+              });
             });
-        },
-        "prefill": {
-            "name": currentUser.name,
-            "email": currentUser.email,
-            "contact": currentUser.phone || ""
-        },
-        "theme": { "color": "#7b5cff" }
-    };
-    const rzp1 = new Razorpay(options);
-    rzp1.on('payment.failed', function (response){
-        alert("Payment failed: " + response.error.description);
-    });
-    rzp1.open();
-}
-
-// --- नया QUIZ फंक्शन ---
-let currentQuiz = {};
-let currentQuestionIndex = 0;
-let score = 0;
-
-async function openQuiz(courseId, category, chapter) {
-    // चैप्टर के नाम में स्पेस को _ से बदलें ताकि ID वैलिड रहे
-    const quizId = `${courseId}_${chapter.replace(/ /g, '_')}`; 
-    const quizRef = db.collection("quizzes").doc(quizId);
-
-    try {
-        const doc = await quizRef.get();
-        if (!doc.exists) {
-            return alert("Quiz for this chapter is not available yet.");
+          } else {
+            totalSections = course.categories.length;
+            course.categories.forEach(cat => {
+              totalChapters += cat.chapters.length;
+            });
+          }
+          card.innerHTML = '<div class="head"><div><h2>' + course.name + '</h2><div class="summary">' + course.summary + '</div><div style="margin-top: 8px; font-size: 12px; color: #666;">📚 ' + totalChapters + ' Total Chapters | 🎯 ' + totalSections + ' Sections</div></div><div class="chip">' + course.price + '</div></div><div class="course-features" style="margin-top: 12px; padding: 10px; background: #f8f9fa; border-radius: 8px;"><div style="font-size: 13px; font-weight: 500; margin-bottom: 6px;">📋 Course Features:</div><div style="font-size: 12px; color: #666;">✅ Chapter-wise PDF Materials<br>✅ Question & Answer Sessions<br>✅ Interactive Quizzes with Scores<br>✅ Mobile-friendly Learning<br>' + (course.id === 'complete' ? '✅ All 4 Courses Included<br>✅ Maximum Discount' : '') + '</div></div><div class="cat-list"></div>';
+          const catList = card.querySelector('.cat-list');
+          if (course.id === 'complete') {
+            ['11en', '12en', '11hi', '12hi'].forEach(cId => {
+              let c = courses.find(x => x.id === cId);
+              const catContainer = document.createElement('div');
+              catContainer.className = 'cat';
+              const safeId = 'complete_' + cId;
+              catContainer.innerHTML = '<div class="category-title" data-target="' + safeId + '"><strong>' + c.name + '</strong></div><div class="chapters" id="' + safeId + '"></div>';
+              const chaptersDiv = catContainer.querySelector('.chapters');
+              c.categories.forEach((cat, ci) => {
+                const secDiv = document.createElement('div');
+                secDiv.className = 'cat';
+                const secId = safeId + '_sec_' + ci;
+                secDiv.innerHTML = '<div class="category-title" data-target="' + secId + '"><strong>' + cat.title + '</strong><small>' + cat.chapters.length + ' lessons ▾</small></div><div class="chapters" id="' + secId + '"></div>';
+                const secChDiv = secDiv.querySelector('.chapters');
+                cat.chapters.forEach(ch => {
+                  const chDiv = document.createElement('div');
+                  chDiv.className = 'chapter-item';
+                  const btnDisabled = !isEnrolled ? 'disabled' : '';
+                  const explainBtn = '<button class="btn explain" ' + btnDisabled + ' onclick="openContent(\'' + cId + '\', \'' + cat.title + '\', \'' + ch + '\', \'explanation\')">Explanation</button>';
+                  const qaBtn = '<button class="btn qa" ' + btnDisabled + ' onclick="openContent(\'' + cId + '\', \'' + cat.title + '\', \'' + ch + '\', \'qa\')">Q&A</button>';
+                  const quizBtn = (cat.title.toLowerCase().includes('writing') || cat.title.includes('लेखन')) ? '' : '<button class="btn quiz" ' + btnDisabled + ' onclick="openQuiz(\'' + cId + '\', \'' + cat.title + '\', \'' + ch + '\')">Quiz</button>';
+                  chDiv.innerHTML = '<div class="chapter-title">' + ch + '</div><div class="chapter-actions">' + explainBtn + qaBtn + quizBtn + '</div>';
+                  secChDiv.appendChild(chDiv);
+                });
+                chaptersDiv.appendChild(secDiv);
+              });
+              catList.appendChild(catContainer);
+            });
+          } else {
+            course.categories.forEach((cat, ci) => {
+              const c = document.createElement('div');
+              c.className = 'cat';
+              const safeId = course.id + '_cat_' + ci;
+              c.innerHTML = '<div class="category-title" data-target="' + safeId + '"><strong>' + cat.title + '</strong><small>' + cat.chapters.length + ' lessons ▾</small></div><div class="chapters" id="' + safeId + '"></div>';
+              const chaptersDiv = c.querySelector('.chapters');
+              cat.chapters.forEach(ch => {
+                const chDiv = document.createElement('div');
+                chDiv.className = 'chapter-item';
+                const btnDisabled = !isEnrolled ? 'disabled' : '';
+                const explainBtn = '<button class="btn explain" ' + btnDisabled + ' onclick="openContent(\'' + course.id + '\', \'' + cat.title + '\', \'' + ch + '\', \'explanation\')">Explanation</button>';
+                const qaBtn = '<button class="btn qa" ' + btnDisabled + ' onclick="openContent(\'' + course.id + '\', \'' + cat.title + '\', \'' + ch + '\', \'qa\')">Q&A</button>';
+                const quizBtn = (cat.title.toLowerCase().includes('writing') || cat.title.includes('लेखन')) ? '' : '<button class="btn quiz" ' + btnDisabled + ' onclick="openQuiz(\'' + course.id + '\', \'' + cat.title + '\', \'' + ch + '\')">Quiz</button>';
+                chDiv.innerHTML = '<div class="chapter-title">' + ch + '</div><div class="chapter-actions">' + explainBtn + qaBtn + quizBtn + '</div>';
+                chaptersDiv.appendChild(chDiv);
+              });
+              catList.appendChild(c);
+            });
+          }
+          const actionDiv = document.createElement('div');
+          if (isEnrolled) {
+            actionDiv.innerHTML = '<div class="price-row"><div style="color: #28a745; font-weight: bold; display: flex; align-items: center; gap: 5px;">✓ <span>Enrolled & Active</span></div><button class="enroll" style="background: #28a745;" disabled>Access Content</button></div>';
+          } else {
+            const originalPrice = course.id === '11en' || course.id === '11hi' ? '₹199' : course.id === '12en' || course.id === '12hi' ? '₹299' : '₹899';
+            actionDiv.innerHTML = '<div class="price-row"><div class="price">' + course.price + ' <small style="text-decoration:line-through;color:#aaa;font-weight:500;margin-left:8px;">' + originalPrice + '</small><div style="font-size: 11px; color: #28a745; margin-top: 2px;">💰 Save ' + (parseInt(originalPrice.replace('₹', '')) - parseInt(course.price.replace('₹', ''))) + '/-</div></div><button class="enroll" onclick="initiatePayment(\'' + course.id + '\', \'' + course.name + '\', \'' + course.price + '\')">🛒 Enroll Now</button></div><div style="text-align: center; margin-top: 8px; font-size: 11px; color: #666;">💳 Secure Payment | 📱 Instant Access</div>';
+          }
+          card.appendChild(actionDiv);
+          container.appendChild(card);
+        });
+      }
+      // ============================================
+      // PAYMENT FUNCTIONS
+      // ============================================
+      function initiatePayment(courseId, courseName, price) {
+        if (!currentUser) {
+          showMessage('Please login first', true);
+          showAuthModal();
+          return;
         }
-        currentQuiz = doc.data();
-        currentQuestionIndex = 0;
-        score = 0;
+        document.getElementById('paymentTitle').textContent = 'Payment for ' + courseName;
+        document.getElementById('paymentAmount').textContent = price;
+        document.getElementById('paymentModal').style.display = 'flex';
+        window.pendingPayment = {
+          courseId,
+          courseName,
+          price
+        };
+      }
 
-        document.getElementById('quizTitle').textContent = `${chapter} - Quiz`;
-        document.getElementById('quizModal').style.display = 'flex';
-        document.getElementById('quizContent').style.display = 'block';
-        document.getElementById('quizResult').style.display = 'none';
+      function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+      }
+      async function confirmPayment() {
+        if (!window.pendingPayment || !currentUser) return;
+        const courseId = window.pendingPayment.courseId;
+        showLoading();
+        try {
+          // Update user's purchased courses in Firestore
+          const userRef = db.collection('users').doc(currentUser.uid);
+          await userRef.update({
+            purchasedCourses: firebase.firestore.FieldValue.arrayUnion(courseId)
+          });
+          // Also log the purchase
+          await db.collection('purchases').add({
+            userId: currentUser.uid,
+            userName: currentUser.name,
+            userPhone: currentUser.phone,
+            courseId: courseId,
+            courseName: window.pendingPayment.courseName,
+            amount: window.pendingPayment.price,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            status: 'pending_verification'
+          });
+          // Update local state
+          if (!currentUser.purchasedCourses) {
+            currentUser.purchasedCourses = [];
+          }
+          currentUser.purchasedCourses.push(courseId);
+          closePaymentModal();
+          renderCourses();
+          showMessage('Payment confirmation received! Please send payment screenshot to WhatsApp: 6299891191. Your access will be activated after verification.');
+        } catch (error) {
+          console.error('Payment error:', error);
+          showMessage('Failed to process payment confirmation. Please try again.', true);
+        } finally {
+          hideLoading();
+        }
+      }
+      // ============================================
+      // CONTENT FUNCTIONS
+      // ============================================
+      async function openContent(courseId, category, chapter, type) {
+        if (!currentUser || !currentUser.purchasedCourses || !currentUser.purchasedCourses.includes(courseId)) {
+          showMessage('Please enroll in this course first', true);
+          return;
+        }
+        showLoading();
+        try {
+          // Query Firestore for content
+          const contentQuery = await db.collection('content').where('courseId', '==', courseId).where('category', '==', category).where('chapter', '==', chapter).where('type', '==', type).limit(1).get();
+          if (!contentQuery.empty) {
+            const contentData = contentQuery.docs[0].data();
+            document.getElementById('contentTitle').textContent = chapter + ' - ' + type.charAt(0).toUpperCase() + type.slice(1);
+            document.getElementById('pdfViewer').src = contentData.url + '#toolbar=0&navpanes=0&scrollbar=1';
+            document.getElementById('contentViewer').style.display = 'block';
+          } else {
+            showMessage('Content not uploaded yet. Please contact Sajan Sir.', true);
+          }
+        } catch (error) {
+          console.error('Error loading content:', error);
+          showMessage('Failed to load content. Please try again.', true);
+        } finally {
+          hideLoading();
+        }
+      }
 
-        displayQuestion();
-    } catch (error) {
-        console.error("Error loading quiz:", error);
-        alert("Could not load the quiz. Please try again.");
-    }
-}
+      function closeContentViewer() {
+        document.getElementById('contentViewer').style.display = 'none';
+        document.getElementById('pdfViewer').src = '';
+      }
+      // ============================================
+      // QUIZ FUNCTIONS
+      // ============================================
+      async function openQuiz(courseId, category, chapter) {
+        if (!currentUser || !currentUser.purchasedCourses || !currentUser.purchasedCourses.includes(courseId)) {
+          showMessage('Please enroll in this course first', true);
+          return;
+        }
+        showLoading();
+        try {
+          const quizQuery = await db.collection('quizzes').where('courseId', '==', courseId).where('category', '==', category).where('chapter', '==', chapter).limit(1).get();
+          if (!quizQuery.empty) {
+            const quizData = quizQuery.docs[0].data();
+            currentQuizData = quizData.questions;
+            currentQuizAnswers = {};
+            renderQuiz(chapter);
+            document.getElementById('quizContainer').style.display = 'block';
+          } else {
+            showMessage('Quiz not available yet. Please contact Sajan Sir.', true);
+          }
+        } catch (error) {
+          console.error('Error loading quiz:', error);
+          showMessage('Failed to load quiz. Please try again.', true);
+        } finally {
+          hideLoading();
+        }
+      }
 
-function displayQuestion() {
-    const questionData = currentQuiz.questions[currentQuestionIndex];
-    document.getElementById('quizQuestion').textContent = `Q${currentQuestionIndex + 1}: ${questionData.q}`;
+      function renderQuiz(chapterName) {
+        document.getElementById('quizTitle').textContent = 'Quiz: ' + chapterName;
+        const content = document.getElementById('quizContent');
+        content.innerHTML = '';
+        currentQuizData.forEach(function(q, qIndex) {
+          const qDiv = document.createElement('div');
+          qDiv.className = 'quiz-question';
+          const optionsHtml = q.options.map(function(option, oIndex) {
+            return '<div class="quiz-option" onclick="selectAnswer(' + qIndex + ', ' + oIndex + ')">' + String.fromCharCode(65 + oIndex) + '. ' + option + '</div>';
+          }).join('');
+          qDiv.innerHTML = '<div style="font-weight: bold; margin-bottom: 10px;">' + (qIndex + 1) + '. ' + q.question + '</div><div class="quiz-options">' + optionsHtml + '</div>';
+          content.appendChild(qDiv);
+        });
+        document.getElementById('submitQuiz').style.display = 'block';
+        document.getElementById('quizResult').innerHTML = '';
+      }
 
-    const optionsContainer = document.getElementById('quizOptions');
-    optionsContainer.innerHTML = '';
-    questionData.options.forEach(option => {
-        const button = document.createElement('button');
-        button.className = 'btn-primary btn-secondary';
-        button.style.width = '100%';
-        button.textContent = option;
-        button.onclick = () => selectAnswer(option);
-        optionsContainer.appendChild(button);
-    });
-}
+      function selectAnswer(questionIndex, optionIndex) {
+        currentQuizAnswers[questionIndex] = optionIndex;
+        const questionDiv = document.querySelectorAll('.quiz-question')[questionIndex];
+        const options = questionDiv.querySelectorAll('.quiz-option');
+        options.forEach(function(opt) {
+          opt.classList.remove('selected');
+        });
+        options[optionIndex].classList.add('selected');
+      }
+      async function submitQuiz() {
+        let correct = 0;
+        const total = currentQuizData.length;
+        currentQuizData.forEach(function(q, index) {
+          if (currentQuizAnswers[index] === q.correctAnswer) {
+            correct++;
+          }
+        });
+        const percentage = Math.round((correct / total) * 100);
+        document.getElementById('quizResult').innerHTML = '<div class="quiz-score"><h3>Quiz Results</h3><div style="font-size: 24px; margin: 15px 0;">' + correct + '/' + total + ' (' + percentage + '%)</div><div style="color: ' + (percentage >= 70 ? '#28a745' : '#dc3545') + '">' + (percentage >= 70 ? '🎉 Well Done!' : '📚 Keep Studying!') + '</div></div>';
+        document.getElementById('submitQuiz').style.display = 'none';
+        // Save quiz result
+        if (currentUser) {
+          try {
+            await db.collection('quizResults').add({
+              userId: currentUser.uid,
+              userName: currentUser.name,
+              score: correct,
+              total: total,
+              percentage: percentage,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+          } catch (error) {
+            console.error('Error saving quiz result:', error);
+          }
+        }
+      }
 
-function selectAnswer(selectedOption) {
-    const questionData = currentQuiz.questions[currentQuestionIndex];
-    if (selectedOption === questionData.answer) {
-        score++;
-    }
-    currentQuestionIndex++;
-    if (currentQuestionIndex < currentQuiz.questions.length) {
-        displayQuestion();
-    } else {
-        document.getElementById('quizContent').style.display = 'none';
-        document.getElementById('quizResult').style.display = 'block';
-        document.getElementById('quizScore').textContent = `${score} / ${currentQuiz.questions.length}`;
-    }
-}
+      function closeQuiz() {
+        document.getElementById('quizContainer').style.display = 'none';
+        currentQuizData = [];
+        currentQuizAnswers = {};
+      }
+      // ============================================
+      // ADMIN FUNCTIONS
+      // ============================================
+      function loadChapters() {
+        const courseId = document.getElementById('adminCourse').value;
+        const chapterSelect = document.getElementById('adminChapter');
+        chapterSelect.innerHTML = '<option value="">Select Chapter</option>';
+        if (courseId) {
+          const course = courses.find(function(c) {
+            return c.id === courseId;
+          });
+          if (course) {
+            course.categories.forEach(function(cat) {
+              cat.chapters.forEach(function(ch) {
+                const option = document.createElement('option');
+                option.value = cat.title + '|||' + ch;
+                option.textContent = cat.title + ' - ' + ch;
+                chapterSelect.appendChild(option);
+              });
+            });
+          }
+        }
+      }
+      async function uploadContent(type) {
+        if (!isAdmin) {
+          showMessage('Admin access required', true);
+          return;
+        }
+        const courseId = document.getElementById('adminCourse').value;
+        const chapterValue = document.getElementById('adminChapter').value;
+        if (!courseId || !chapterValue) {
+          showMessage('Please select course and chapter', true);
+          return;
+        }
+        const parts = chapterValue.split('|||');
+        const category = parts[0];
+        const chapter = parts[1];
+        const fileInput = document.getElementById(type === 'explanation' ? 'explanationPdf' : 'qaPdf');
+        const file = fileInput.files[0];
+        if (!file) {
+          showMessage('Please select a PDF file', true);
+          return;
+        }
+        if (file.type !== 'application/pdf') {
+          showMessage('Please select only PDF files', true);
+          return;
+        }
+        // Check file size (max 10MB for free Firebase)
+        if (file.size > 10 * 1024 * 1024) {
+          showMessage('File size must be less than 10MB', true);
+          return;
+        }
+        const progressDiv = document.getElementById(type + 'Progress');
+        progressDiv.style.display = 'block';
+        progressDiv.textContent = 'Uploading... 0%';
+        try {
+          // Upload file to Firebase Storage
+          const storageRef = storage.ref('content/' + courseId + '/' + category + '/' + chapter + '/' + type + '_' + Date.now() + '.pdf');
+          const uploadTask = storageRef.put(file);
+          uploadTask.on('state_changed',
+            (snapshot) => {
+              const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              progressDiv.textContent = 'Uploading... ' + Math.round(progress) + '%';
+            },
+            (error) => {
+              console.error('Upload error:', error);
+              showMessage('Upload failed: ' + error.message, true);
+              progressDiv.style.display = 'none';
+            }, async () => {
+              const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+              // Save metadata to Firestore
+              await db.collection('content').add({
+                courseId: courseId,
+                category: category,
+                chapter: chapter,
+                type: type,
+                url: downloadURL,
+                fileName: file.name,
+                uploadedBy: currentUser.uid,
+                uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+              progressDiv.textContent = 'Upload successful!';
+              setTimeout(() => {
+                progressDiv.style.display = 'none';
+                fileInput.value = '';
+              }, 2000);
+              showMessage(type.charAt(0).toUpperCase() + type.slice(1) + ' PDF uploaded successfully for "' + chapter + '"!');
+              loadUploadedContent();
+            });
+        } catch (error) {
+          console.error('Upload error:', error);
+          showMessage('Upload failed: ' + error.message, true);
+          progressDiv.style.display = 'none';
+        }
+      }
+      async function loadUploadedContent() {
+        if (!isAdmin) return;
+        const courseId = document.getElementById('manageContentCourse').value;
+        const contentList = document.getElementById('uploadedContentList');
+        if (!courseId) {
+          contentList.innerHTML = '<p style="padding:10px;text-align:center;color:#666;">Select a course to view uploaded content</p>';
+          return;
+        }
+        showLoading();
+        try {
+          const contentQuery = await db.collection('content').where('courseId', '==', courseId).orderBy('uploadedAt', 'desc').get();
+          if (contentQuery.empty) {
+            contentList.innerHTML = '<p style="padding:10px;text-align:center;color:#666;">No content uploaded yet for this course</p>';
+          } else {
+            contentList.innerHTML = '';
+            const groupedContent = {};
+            contentQuery.docs.forEach(doc => {
+              const data = doc.data();
+              const key = data.chapter;
+              if (!groupedContent[key]) {
+                groupedContent[key] = {
+                  category: data.category,
+                  items: []
+                };
+              }
+              groupedContent[key].items.push({
+                id: doc.id,
+                ...data
+              });
+            });
+            Object.keys(groupedContent).forEach(chapter => {
+              const group = groupedContent[chapter];
+              const itemDiv = document.createElement('div');
+              itemDiv.style.cssText = 'background:white;padding:12px;margin-bottom:10px;border-radius:8px;border:1px solid #ddd;';
+              let contentHtml = '<div style="font-weight:600;margin-bottom:8px;color:#333;">' + chapter + '</div>';
+              contentHtml += '<div style="font-size:12px;color:#666;margin-bottom:8px;">' + group.category + '</div>';
+              group.items.forEach(item => {
+                const bgColor = item.type === 'explanation' ? '#e6f6ff' : '#fff1e6';
+                contentHtml += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;padding:6px;background:' + bgColor + ';border-radius:6px;">';
+                contentHtml += '<span style="font-size:12px;">📄 ' + item.type.charAt(0).toUpperCase() + item.type.slice(1) + ' PDF</span>';
+                contentHtml += '<button class="btn-delete" onclick="deleteContent(\'' + item.id + '\', \'' + chapter + '\', \'' + item.type + '\')">🗑️ Delete</button>';
+                contentHtml += '</div>';
+              });
+              itemDiv.innerHTML = contentHtml;
+              contentList.appendChild(itemDiv);
+            });
+          }
+        } catch (error) {
+          console.error('Error loading content:', error);
+          showMessage('Failed to load content list', true);
+        } finally {
+          hideLoading();
+        }
+      }
+      async function deleteContent(contentId, chapterName, contentType) {
+        if (!isAdmin) return;
+        if (!confirm('Are you sure you want to delete ' + contentType + ' for "' + chapterName + '"?')) {
+          return;
+        }
+        showLoading();
+        try {
+          const contentDoc = await db.collection('content').doc(contentId).get();
+          if (contentDoc.exists) {
+            const data = contentDoc.data();
+            // Delete from Storage
+            const fileRef = storage.refFromURL(data.url);
+            await fileRef.delete();
+          }
+          // Delete from Firestore
+          await db.collection('content').doc(contentId).delete();
+          showMessage(contentType + ' deleted successfully!');
+          loadUploadedContent();
+        } catch (error) {
+          console.error('Delete error:', error);
+          showMessage('Failed to delete content', true);
+        } finally {
+          hideLoading();
+        }
+      }
+      // ============================================
+      // QUIZ BUILDER FUNCTIONS
+      // ============================================
+      window.currentQuizBuilder = [];
 
-function closeQuiz() {
-    document.getElementById('quizModal').style.display = 'none';
-}
+      function addQuizQuestion() {
+        const question = document.getElementById('quizQuestion').value.trim();
+        const options = Array.from(document.querySelectorAll('.option-input')).map(input => input.value.trim());
+        const correctAnswer = parseInt(document.getElementById('correctAnswer').value);
+        if (!question || options.some(opt => !opt) || isNaN(correctAnswer)) {
+          showMessage('Please fill all fields', true);
+          return;
+        }
+        window.currentQuizBuilder.push({
+          question: question,
+          options: options,
+          correctAnswer: correctAnswer
+        });
+        document.getElementById('quizQuestion').value = '';
+        document.querySelectorAll('.option-input').forEach(input => input.value = '');
+        document.getElementById('correctAnswer').value = '';
+        updateQuizPreview();
+      }
 
-// Event listener for category dropdowns
-document.addEventListener('click',function(e){const catTitle=e.target.closest('.category-title');if(catTitle&&catTitle.dataset.target){const tgt=document.getElementById(catTitle.dataset.target);if(tgt){const isOpen=tgt.style.display==='block';const card=catTitle.closest('.course-card');card.querySelectorAll('.chapters').forEach(function(d){d.style.display='none'}),isOpen||(tgt.style.display='block')}}});
-</script>
-</body>
+      function updateQuizPreview() {
+        const preview = document.getElementById('quizPreview');
+        if (window.currentQuizBuilder.length === 0) {
+          preview.innerHTML = '<p>No questions added yet</p>';
+          return;
+        }
+        const questionsHtml = window.currentQuizBuilder.map((q, index) => {
+          const optionsHtml = q.options.map((opt, i) => {
+            const isCorrect = i === q.correctAnswer;
+            return '<div style="color: ' + (isCorrect ? '#28a745' : '#666') + '; ' + (isCorrect ? 'font-weight: bold;' : '') + '">' + String.fromCharCode(65 + i) + '. ' + opt + (isCorrect ? ' ✓' : '') + '</div>';
+          }).join('');
+          return '<div style="background: white; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd;"><strong>' + (index + 1) + '. ' + q.question + '</strong><div style="margin-left: 20px; margin-top: 5px;">' + optionsHtml + '</div><button class="btn-delete" onclick="removeQuestion(' + index + ')" style="margin-top:5px;">Remove</button></div>';
+        }).join('');
+        preview.innerHTML = '<h4>Quiz Preview (' + window.currentQuizBuilder.length + ' questions):</h4>' + questionsHtml;
+      }
+
+      function removeQuestion(index) {
+        window.currentQuizBuilder.splice(index, 1);
+        updateQuizPreview();
+      }
+      async function saveQuiz() {
+        if (!isAdmin) {
+          showMessage('Admin access required', true);
+          return;
+        }
+        const courseId = document.getElementById('adminCourse').value;
+        const chapterValue = document.getElementById('adminChapter').value;
+        if (!courseId || !chapterValue) {
+          showMessage('Please select course and chapter', true);
+          return;
+        }
+        if (window.currentQuizBuilder.length === 0) {
+          showMessage('Please add at least one question', true);
+          return;
+        }
+        const parts = chapterValue.split('|||');
+        const category = parts[0];
+        const chapter = parts[1];
+        showLoading();
+        try {
+          await db.collection('quizzes').add({
+            courseId: courseId,
+            category: category,
+            chapter: chapter,
+            questions: window.currentQuizBuilder,
+            createdBy: currentUser.uid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          showMessage('Quiz saved successfully for "' + chapter + '"!');
+          window.currentQuizBuilder = [];
+          updateQuizPreview();
+        } catch (error) {
+          console.error('Error saving quiz:', error);
+          showMessage('Failed to save quiz', true);
+        } finally {
+          hideLoading();
+        }
+      }
+      async function loadUploadedQuizzes() {
+        if (!isAdmin) return;
+        const courseId = document.getElementById('manageQuizCourse').value;
+        const quizList = document.getElementById('uploadedQuizList');
+        if (!courseId) {
+          quizList.innerHTML = '<p style="padding:10px;text-align:center;color:#666;">Select a course to view quizzes</p>';
+          return;
+        }
+        showLoading();
+        try {
+          const quizQuery = await db.collection('quizzes').where('courseId', '==', courseId).orderBy('createdAt', 'desc').get();
+          if (quizQuery.empty) {
+            quizList.innerHTML = '<p style="padding:10px;text-align:center;color:#666;">No quizzes created yet for this course</p>';
+          } else {
+            quizList.innerHTML = '';
+            quizQuery.docs.forEach(doc => {
+              const data = doc.data();
+              const itemDiv = document.createElement('div');
+              itemDiv.className = 'content-item';
+              itemDiv.innerHTML = '<div class="content-item-info"><div style="font-weight:600;margin-bottom:4px;">' + data.chapter + '</div><div style="font-size:12px;color:#666;">' + data.category + ' • ' + data.questions.length + ' questions</div></div><div class="content-item-actions"><button class="btn-delete" onclick="deleteQuiz(\'' + doc.id + '\', \'' + data.chapter + '\')">🗑️ Delete</button></div>';
+              quizList.appendChild(itemDiv);
+            });
+          }
+        } catch (error) {
+          console.error('Error loading quizzes:', error);
+          showMessage('Failed to load quizzes', true);
+        } finally {
+          hideLoading();
+        }
+      }
+      async function deleteQuiz(quizId, chapterName) {
+        if (!isAdmin) return;
+        if (!confirm('Are you sure you want to delete quiz for "' + chapterName + '"?')) {
+          return;
+        }
+        showLoading();
+        try {
+          await db.collection('quizzes').doc(quizId).delete();
+          showMessage('Quiz deleted successfully!');
+          loadUploadedQuizzes();
+        } catch (error) {
+          console.error('Delete error:', error);
+          showMessage('Failed to delete quiz', true);
+        } finally {
+          hideLoading();
+        }
+      }
+      // ============================================
+      // STUDENT MANAGEMENT
+      // ============================================
+      async function loadStudentList() {
+        if (!isAdmin) return;
+        const studentList = document.getElementById('studentList');
+        studentList.innerHTML = '<h4>Loading students...</h4>';
+        showLoading();
+        try {
+          const usersQuery = await db.collection('users').where('isAdmin', '==', false).orderBy('createdAt', 'desc').get();
+          if (usersQuery.empty) {
+            studentList.innerHTML = '<h4>Registered Students:</h4><p>No students registered yet</p>';
+          } else {
+            studentList.innerHTML = '<h4>Registered Students (' + usersQuery.size + '):</h4>';
+            usersQuery.docs.forEach(doc => {
+              const user = doc.data();
+              const studentDiv = document.createElement('div');
+              studentDiv.style.cssText = 'background: white; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd;';
+              const purchasedCourses = user.purchasedCourses || [];
+              const courseNames = purchasedCourses.map(courseId => {
+                const course = courses.find(c => c.id === courseId);
+                return course ? course.name : courseId;
+              }).join(', ');
+              const createdDate = user.createdAt ? new Date(user.createdAt.toDate()).toLocaleDateString() : 'N/A';
+              studentDiv.innerHTML = '<strong>' + user.name + '</strong><br><small>📞 Phone: ' + user.phone + ' | 🎓 Class: ' + user.class + '</small><br><small>📚 Courses: ' + (courseNames || 'None purchased') + '</small><br><small>📅 Registered: ' + createdDate + '</small>';
+              studentList.appendChild(studentDiv);
+            });
+          }
+        } catch (error) {
+          console.error('Error loading students:', error);
+          studentList.innerHTML = '<h4>Registered Students:</h4><p style="color:red;">Failed to load students</p>';
+        } finally {
+          hideLoading();
+        }
+      }
+      // ============================================
+      // ACCORDION TOGGLE
+      // ============================================
+      document.addEventListener('click', function(e) {
+        const catTitle = e.target.closest('.category-title');
+        if (catTitle && catTitle.dataset.target) {
+          const tgt = document.getElementById(catTitle.dataset.target);
+          if (tgt) {
+            const isOpen = tgt.style.display === 'block';
+            const card = catTitle.closest('.course-card');
+            if (card) {
+              card.querySelectorAll('.chapters').forEach(d => d.style.display = 'none');
+            }
+            if (!isOpen) tgt.style.display = 'block';
+          }
+        }
+      });
+      // ============================================
+      // INITIALIZE APP
+      // ============================================
+      document.addEventListener('DOMContentLoaded', function() {
+        renderCourses();
+      });
+    </script>
+  </body>
 </html>
